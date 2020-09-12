@@ -21,6 +21,7 @@ public class Conexion {
         do {
 
             coneccion = null;
+            //String url = "jdbc:postgresql://192.168.0.2:5454/FACTURACION?";
             String url = "jdbc:postgresql://127.0.0.1:5454/FACTURACION?";
             String user = "postgres";
             String pass = "123098";

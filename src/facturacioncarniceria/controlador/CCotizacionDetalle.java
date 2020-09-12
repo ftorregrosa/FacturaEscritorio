@@ -55,6 +55,7 @@ import javax.swing.JFileChooser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -114,8 +115,9 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         String encarProyecto = vprincipal.getLblNombreUsuario().getText();
         String fechaPedido = vcotizacionDetalle.getTxtFechaInicioCo().getText();
         crearCarpetas1(nomProyecto);
-        JFileChooser dlg = new JFileChooser("C:/COTIZACION FOREST BEEF/");
+        JFileChooser dlg = new JFileChooser("c:/COTIZACION FOREST BEEF/");
         dlg.setSelectedFile(new File("CT_" + nomProyecto + "_" + codigoPedido));
+        
         Font fuente = new Font(Font.FontFamily.COURIER, 14, Font.BOLD);
         Font numeracion = new Font(Font.FontFamily.COURIER, 18, Font.BOLD);
         Font fuente1 = new Font(Font.FontFamily.COURIER, 11, Font.BOLD);
@@ -137,6 +139,9 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 Document doc = new Document();
                 PdfWriter.getInstance(doc, archivo);
                 doc.open();
+               // Image imagen = Image.getInstance("costos.png");
+               // imagen.setAlignment(Element.ALIGN_LEFT);
+                
                 Paragraph Encabezado = new Paragraph();
                 Paragraph Titulo = new Paragraph();
                 Paragraph producto = new Paragraph();
@@ -164,6 +169,7 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 doc.add(numero);
                 doc.add(Titulo);
                 doc.add(Encabezado);
+             //    doc.add(imagen);
 
                 producto.setFont(fuente1);
                 producto.add("\n PRODUCTOS \n\n");
@@ -514,8 +520,8 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
             double subIvaTotal = subTotal - subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -529,7 +535,7 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
 
@@ -566,8 +572,8 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
             double subIvaTotal = subTotal - subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -581,7 +587,7 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
 

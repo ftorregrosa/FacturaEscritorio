@@ -414,8 +414,8 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
             double subIvaTotal=subTotal-subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -429,7 +429,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
             
@@ -466,8 +466,8 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
             double subIvaTotal=subTotal-subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -482,7 +482,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
             
@@ -707,9 +707,9 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 
             try {
                 FileOutputStream archivo = new FileOutputStream(f + ".pdf");
-                Rectangle pageSize = new Rectangle(285f, 900f); //ancho y alto
+                Rectangle pageSize = new Rectangle(270f, 565f); //ancho y alto
                 Document doc = new Document(pageSize);
-                 doc.setMargins(10, 7, 100, 15); // (izq, der, arriba, abajo)
+                 doc.setMargins(23, 7, 14, 15); // (izq, der, arriba, abajo)
                 //Document doc = new Document();
                 PdfWriter writer =PdfWriter.getInstance(doc, archivo);
                 doc.open();
@@ -746,30 +746,30 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 
                 
 
-                PdfPTable tablaPedido = new PdfPTable(5);
+                PdfPTable tablaPedido = new PdfPTable(4);
                // tablaPedido.getDefaultCell().setBorder(0);
                // tablaPedido.getDefaultCell().setBorderWidth(0f);
                 tablaPedido.getDefaultCell().setBorderColor(BaseColor.YELLOW);
                // tablaPedido.DefaultCell.Border = 0;
                 tablaPedido.setHorizontalAlignment(Element.ALIGN_LEFT);
                 tablaPedido.setWidthPercentage(75f);
-                tablaPedido.setWidths(new float[]{0.10f, 0.30f, 0.10f, 0.12f, 0.12f});
+                tablaPedido.setWidths(new float[]{0.30f, 0.10f, 0.12f, 0.12f});
                 //tablaPedido.getDefaultCell().setBorder(0);
                // tablaPedido.getDefaultCell().setBorderWidth(0f);
                 tablaPedido.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                
-                PdfPCell cellOne = (new PdfPCell(new Phrase("#", fuente1)));
+                
                 PdfPCell cellOn = (new PdfPCell(new Phrase("Descripcion", fuente1)));
                 PdfPCell cellO = (new PdfPCell(new Phrase("Cant.", fuente1)));
                 PdfPCell cell = (new PdfPCell(new Phrase("Precio", fuente1)));
                 PdfPCell cel = (new PdfPCell(new Phrase("Total", fuente1)));
-                cellOne.setBorder(0);
+         
                 cellOn.setBorder(0);
                 cellO.setBorder(0);
                 cell.setBorder(0);
                 cel.setBorder(0);
                 
-                tablaPedido.addCell(cellOne);
+    
                 tablaPedido.addCell(cellOn);
                 tablaPedido.addCell(cellO);
                 tablaPedido.addCell(cell);
@@ -783,27 +783,25 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 //                tablaPedido.addCell(new PdfPCell(new Phrase("Total", fuente1)));
 
                 for (int i = 0; i < vfacturaDetalle.getTablaFactura().getRowCount(); i++) {
-                    String codigo = vfacturaDetalle.getTablaFactura().getValueAt(i, 0).toString();
                     String nomProducto = vfacturaDetalle.getTablaFactura().getValueAt(i, 1).toString();
                     String cantidad = vfacturaDetalle.getTablaFactura().getValueAt(i, 2).toString();
                     String precio = vfacturaDetalle.getTablaFactura().getValueAt(i, 3).toString();
                     String total = vfacturaDetalle.getTablaFactura().getValueAt(i, 4).toString();
 
-                    PdfPCell celdasProductos=(new PdfPCell(new Phrase(codigo, fuente2)));
+
                     PdfPCell celdasProducto=(new PdfPCell(new Phrase(nomProducto, fuente2)));
                     PdfPCell celdasProduct=(new PdfPCell(new Phrase(cantidad, fuente2)));
                     PdfPCell celdasProduc=(new PdfPCell(new Phrase(precio, fuente2)));
                     PdfPCell celdasProdu=(new PdfPCell(new Phrase(total, fuente3)));
                     
-                celdasProductos.setBorder(0);
+
                 celdasProducto.setBorder(0);
                 celdasProduct.setBorder(0);
                 celdasProduc.setBorder(0);
                 celdasProdu.setBorder(0);
                     
                     
-     
-                tablaPedido.addCell(celdasProductos);
+    
                 tablaPedido.addCell(celdasProducto);
                 tablaPedido.addCell(celdasProduct);
                 tablaPedido.addCell(celdasProduc);

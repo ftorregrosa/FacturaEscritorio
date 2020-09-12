@@ -16,9 +16,8 @@ public class FooterPiePaginaiText extends  PdfPageEventHelper {
  
  @Override
  public void onEndPage(PdfWriter writer, Document document) {
-     ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("______________"), 50,110,0); 
-     ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Recibi Conforme"), 50,90,0); 
-    ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("______________"), 50,40,0);   
-  ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Firma Autorizada"), 50,20,0);
+
+    ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("."), 50,30,0);   
+
  }
 }

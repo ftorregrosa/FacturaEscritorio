@@ -2,6 +2,35 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CProducto.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VPrincipal.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CCotizacionIngreso.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CCotizacionDetalle.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VCotizacionesIngreso.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/modelo/Conexion.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VCotizacion.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VProducto.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VLoginMain.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VFacturaIngreso.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VFactura.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VProveedores.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CUsuario.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CReportes.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CComprasHacer.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VComprasIngreso.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/modelo/CompraDAO.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/ColorTabla.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CCompraIngreso.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VUsuario.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VComprasHacer.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VModificaContrasena.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/FooterPiePaginaiText.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/modelo/CompraVentaDAO.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VReportes.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CCliente.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/vista/VClientes.java</file>
+            <file>file:/C:/Users/pc/Desktop/CodigoFacturacion/FacturaEscritorio/src/facturacioncarniceria/controlador/CFacturaDetalle.java</file>
+        </group>
     </open-files>
 </project-private>

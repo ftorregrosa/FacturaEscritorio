@@ -66,6 +66,17 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         }
     };
     
+    DefaultTableModel  modeloTablaVentas1 = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int filas, int columnas) {
+            if (columnas == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+    
     DefaultTableModel  modeloTablaCompras = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int filas, int columnas) {
@@ -91,6 +102,9 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         this.vreportes.getBtnExportarCompras().addActionListener(this);
 //       // this.vreportes.getJmiModificar().addActionListener(this);
         this.vreportes.getBtnExportarVentas().addActionListener(this);
+        
+        this.vreportes.getBtnActualizar1().addActionListener(this);
+//       // this.vreportes.getJmiModificar().addActionListener(this);
 //        this.vreportes.getTxtBuscar().addKeyListener(this);
 //        this.vreportes.getTablaUsuario().addMouseListener(this);
 
@@ -123,6 +137,20 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         modeloTablaVentas.addColumn("PAGO");
         modeloTablaVentas.addColumn("REALIZADO");
         vreportes.getTablaReporteVenta().setModel(modeloTablaVentas);
+        
+        modeloTablaVentas1.addColumn("#");
+        modeloTablaVentas1.addColumn("TIPO");
+        modeloTablaVentas1.addColumn("FECHA");
+        modeloTablaVentas1.addColumn("IDENT. CEDULA");
+        modeloTablaVentas1.addColumn("NOM. CLIENTE");
+        modeloTablaVentas1.addColumn("NUM. FACTURA");
+        modeloTablaVentas1.addColumn("SUB 12%");
+        modeloTablaVentas1.addColumn("BASE 0%");
+        modeloTablaVentas1.addColumn("IVA 12%");
+        modeloTablaVentas1.addColumn("TOTAL");
+        modeloTablaVentas1.addColumn("PAGO");
+        modeloTablaVentas1.addColumn("REALIZADO");
+        vreportes.getTablaReporteVenta1().setModel(modeloTablaVentas1);
     }
 
     public void validarCampos() {
@@ -160,16 +188,38 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(10).setPreferredWidth(20);
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(11).setPreferredWidth(100);
         
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(0).setPreferredWidth(2);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(1).setPreferredWidth(50);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(2).setPreferredWidth(40);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(3).setPreferredWidth(60);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(4).setPreferredWidth(150);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(5).setPreferredWidth(80);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(6).setPreferredWidth(20);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(7).setPreferredWidth(20);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(8).setPreferredWidth(20);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(9).setPreferredWidth(20);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(10).setPreferredWidth(20);
+        vreportes.getTablaReporteVenta1().getColumnModel().getColumn(11).setPreferredWidth(100);
+        
         Date fechaActual = new Date();
         vreportes.getDcInicial().setDate(fechaActual);
         vreportes.getDcFinal().setDate(fechaActual);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        vreportes.getDcInicial1().setDate(fechaActual);
+        vreportes.getDcFinal1().setDate(fechaActual);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 
         String fechaIngreso = sdf.format(vreportes.getDcInicial().getDate());
         String fechaIngresoFin = sdf.format(vreportes.getDcFinal().getDate());
+        
+     
+        String fechaIngresoFin1 = sdf1.format(vreportes.getDcFinal1().getDate());
 
         contextReportes.RunvisualizeCompraVenta(modeloTablaCompras, fechaIngreso, fechaIngresoFin, 1);
         contextReportes.RunvisualizeCompraVenta(modeloTablaVentas, fechaIngreso, fechaIngresoFin, 2);
+        
+        contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin1, 2);
 
         vprincipal.getLblCedula().getText();
         // contextReportes.RunVisualizeContra(vmodificarcontra.getTxtCedula(),vmodificarcontra.getTxtContra(),vmodificarcontra.getTxtNombres(),vmodificarcontra.getTxtCargo(),vmain.getLblcedula().getText());
@@ -185,6 +235,13 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
     public void cleanTableVenta() {
         for (int i = 0; i < vreportes.getTablaReporteVenta().getRowCount(); i++) {
             modeloTablaVentas.removeRow(i);
+            i -= 1;
+        }
+    }
+    
+    public void cleanTableVenta1() {
+        for (int i = 0; i < vreportes.getTablaReporteVenta1().getRowCount(); i++) {
+            modeloTablaVentas1.removeRow(i);
             i -= 1;
         }
     }
@@ -309,6 +366,19 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
             }
         }
     }
+    
+    
+    public void cajaNum(){
+        int totalColumnaCompra = vreportes.getTablaReporteVenta1().getRowCount();
+        vreportes.getTxtNumFacturas().setText(Integer.toString(totalColumnaCompra));
+        double totalProductos1 = 0;
+        for (int j = 0; j < vreportes.getTablaReporteVenta1().getRowCount(); j++) {
+            totalProductos1 = totalProductos1 + Float.parseFloat(vreportes.getTablaReporteVenta1().getValueAt(j, 9).toString());
+            totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+            System.out.println(totalProductos1);
+            vreportes.getTxtCaja().setText(Double.toString(totalProductos1));
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -339,6 +409,18 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
 //        vreportes.getDcFinal().setDate(fechaActual);
             contextReportes.RunvisualizeCompraVenta(modeloTablaCompras, fechaIngreso, fechaIngresoFin, 1);
             contextReportes.RunvisualizeCompraVenta(modeloTablaVentas, fechaIngreso, fechaIngresoFin, 2);
+        }
+        
+  
+
+        if (this.vreportes.getBtnActualizar1()== ae.getSource()) {
+            cleanTableVenta1();
+            vreportes.getTxtCaja().setText("");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaIngreso = sdf.format(vreportes.getDcInicial1().getDate());
+            String fechaIngresoFin = sdf.format(vreportes.getDcFinal1().getDate());
+            contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin, 2);
+            cajaNum();
         }
 
     }

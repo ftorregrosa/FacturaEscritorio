@@ -40,16 +40,7 @@ public class CCliente implements KeyListener, MouseListener, ActionListener {
     Conexion connectionBD;
     Validaciones validar =  new Validaciones();
     
-    DefaultTableModel  modeloTablaCliente = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int filas, int columnas) {
-            if (columnas == 3) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    };
+    DefaultTableModel  modeloTablaCliente = new DefaultTableModel();
 
     
     TableRowSorter trs;

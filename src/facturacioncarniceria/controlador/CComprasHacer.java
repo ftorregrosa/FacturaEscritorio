@@ -218,6 +218,7 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
             vcomprasHacer.getBtnGuardar().setEnabled(false);
             quitarUltimasFilas();
             vcomprasHacer.getBtnGuardar().setEnabled(false);
+            vcomprasHacer.getTablaCompras().setEnabled(true);
         }
         if (this.vcomprasHacer.getBtnCalcularFactura() == ae.getSource()) {  
             
@@ -291,8 +292,8 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
             double subTotal = Double.parseDouble(vcomprasHacer.getTxtTotalProductosComprados().getText());
             double subIvaTotal = subTotal - subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -306,7 +307,7 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaCompraDetalle.addRow(objectoIvaCero);
 
@@ -344,8 +345,8 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
             double subTotal = Double.parseDouble(vcomprasHacer.getTxtTotalProductosComprados().getText());
             double subIvaTotal = subTotal - subtotalcero;
             
-            double subIvaTotaldosDecimales = ((0.12 * subIvaTotal));
-            subIvaTotaldosDecimales = Math.round(subIvaTotaldosDecimales * 100) / 100d;
+            double subIvaTotaldosDecimales;
+            subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
@@ -359,7 +360,7 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
             objectoIvaCero[0] = " ";
             objectoIvaCero[1] = " ";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "I.V.A 0%";
+            objectoIvaCero[3] = "SUB 0%";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaCompraDetalle.addRow(objectoIvaCero);
 
