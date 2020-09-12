@@ -353,7 +353,7 @@
                 <Container class="rojerusan.RSPanelImage" name="rSPanelImage1">
                   <Properties>
                     <Property name="imagen" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/facturacioncarniceria/imagenes/8c0c890f-7afc-4ade-9ec3-fa594d5113e3.jpg"/>
+                      <Image iconType="3" name="/facturacioncarniceria/imagenes/FORESTBEEF.jpg"/>
                     </Property>
                   </Properties>
 

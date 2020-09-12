@@ -62,6 +62,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -119,9 +120,9 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         dlg.setSelectedFile(new File("CT_" + nomProyecto + "_" + codigoPedido));
         
         Font fuente = new Font(Font.FontFamily.COURIER, 14, Font.BOLD);
-        Font numeracion = new Font(Font.FontFamily.COURIER, 18, Font.BOLD);
+        Font numeracion = new Font(Font.FontFamily.COURIER, 16, Font.BOLD);
         Font fuente1 = new Font(Font.FontFamily.COURIER, 11, Font.BOLD);
-        Font fuente2 = new Font(Font.FontFamily.COURIER, 10);
+        Font fuente2 = new Font(Font.FontFamily.COURIER, 11);
         Font fuente3 = new Font(Font.FontFamily.COURIER, 11, Font.BOLD);
 
         int opcion = dlg.showSaveDialog(vprincipal);
@@ -139,9 +140,14 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 Document doc = new Document();
                 PdfWriter.getInstance(doc, archivo);
                 doc.open();
-               // Image imagen = Image.getInstance("costos.png");
-               // imagen.setAlignment(Element.ALIGN_LEFT);
-                
+               // Image imagen = Image.getInstance("facturacioncarniceria/imagenes/FORESTBEEF.jpg");
+                Image imagen = Image.getInstance("src/facturacioncarniceria/imagenes/FORESTBEEF.jpg");
+               // Image imagen = Image.getInstance(new FileOutputStream('FORESTBEEF.jpg'));
+                imagen.scaleToFit(200, 400);
+                imagen.setAbsolutePosition(30f, 750f);
+                //imagen.setAlignment(Element.ALIGN_LEFT);
+                 doc.add(imagen);
+                 
                 Paragraph Encabezado = new Paragraph();
                 Paragraph Titulo = new Paragraph();
                 Paragraph producto = new Paragraph();
@@ -163,13 +169,18 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 numero.setAlignment(Element.ALIGN_RIGHT);
                 Titulo.add("CLIENTE: " + nomProyecto + "\n");
                 Titulo.setAlignment(Element.ALIGN_RIGHT);
+                Encabezado.add("TELEFONO: XXXXXXXX\n");
+                Encabezado.add("DIRECCION: XXXXXXXX\n");
+                Encabezado.add("PAGINA WEB: https://theforestbeef.com/ \n");
                 Encabezado.add("AUTORIZADO POR.  " + encarProyecto + "\n");
                 Encabezado.add("FECHA COTIZACIÓN   " + fechaPedido);
                 Encabezado.setAlignment(Element.ALIGN_LEFT);
                 doc.add(numero);
+                
                 doc.add(Titulo);
+                doc.add(new Paragraph("\n \n", fuente1));
                 doc.add(Encabezado);
-             //    doc.add(imagen);
+                
 
                 producto.setFont(fuente1);
                 producto.add("\n PRODUCTOS \n\n");
@@ -545,7 +556,7 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             objectoIva[0] = " ";
             objectoIva[1] = " ";
             objectoIva[2] = " ";
-            objectoIva[3] = "I.V.A 12%";
+            objectoIva[3] = "IVA 12%";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
 
@@ -597,7 +608,7 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             objectoIva[0] = " ";
             objectoIva[1] = " ";
             objectoIva[2] = " ";
-            objectoIva[3] = "I.V.A 12%";
+            objectoIva[3] = "IVA 12%";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
 

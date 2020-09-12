@@ -439,7 +439,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             objectoIva[0] = " ";
             objectoIva[1] = " ";
             objectoIva[2] = " ";
-            objectoIva[3] = "I.V.A 12%";
+            objectoIva[3] = "IVA 12%";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
              
@@ -492,7 +492,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             objectoIva[0] = " ";
             objectoIva[1] = " ";
             objectoIva[2] = " ";
-            objectoIva[3] = "I.V.A 12%";
+            objectoIva[3] = "IVA 12%";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
              
@@ -693,8 +693,8 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         JFileChooser dlg = new JFileChooser("C:/FACTURACION FOREST BEEF/"+fechaPedido);
         dlg.setSelectedFile(new File("FAC_" + fechaPedido + "_" + codigoPedido));
         
-        Font fuente1 = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD);
-        Font fuente2 = new Font(Font.FontFamily.TIMES_ROMAN, 8);
+        Font fuente1 = new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD);
+        Font fuente2 = new Font(Font.FontFamily.TIMES_ROMAN, 7, Font.BOLD);
         Font fuente3 = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD);
 
         int opcion = dlg.showSaveDialog(vprincipal);
@@ -709,7 +709,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
                 FileOutputStream archivo = new FileOutputStream(f + ".pdf");
                 Rectangle pageSize = new Rectangle(270f, 565f); //ancho y alto
                 Document doc = new Document(pageSize);
-                 doc.setMargins(23, 7, 14, 15); // (izq, der, arriba, abajo)
+                 doc.setMargins(22, 7, 10, 15); // (izq, der, arriba, abajo)
                 //Document doc = new Document();
                 PdfWriter writer =PdfWriter.getInstance(doc, archivo);
                 doc.open();
@@ -738,11 +738,11 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
               //  Encabezado.add("CAJERO.  " + encarProyecto + "\n");
                 Encabezado.add("FECHA:   " + fechaPedido);
                 Encabezado.setAlignment(Element.ALIGN_LEFT);
-                FinalPag.add("CAJERO.  " + encarProyecto + "\n");
+                FinalPag.add("CAJERO:  " + encarProyecto + "\n");
                 FinalPag.setAlignment(Element.ALIGN_BASELINE);
                 doc.add(Encabezado);
                 doc.add(FinalPag);
-                doc.add(new Paragraph("____________________________________________________", fuente1));
+                doc.add(new Paragraph("___________________________________", fuente1));
 
                 
 
@@ -753,14 +753,14 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
                // tablaPedido.DefaultCell.Border = 0;
                 tablaPedido.setHorizontalAlignment(Element.ALIGN_LEFT);
                 tablaPedido.setWidthPercentage(75f);
-                tablaPedido.setWidths(new float[]{0.30f, 0.10f, 0.12f, 0.12f});
+                tablaPedido.setWidths(new float[]{0.35f, 0.10f, 0.15f, 0.15f});
                 //tablaPedido.getDefaultCell().setBorder(0);
                // tablaPedido.getDefaultCell().setBorderWidth(0f);
                 tablaPedido.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                
                 
                 PdfPCell cellOn = (new PdfPCell(new Phrase("Descripcion", fuente1)));
-                PdfPCell cellO = (new PdfPCell(new Phrase("Cant.", fuente1)));
+                PdfPCell cellO = (new PdfPCell(new Phrase("Cant", fuente1)));
                 PdfPCell cell = (new PdfPCell(new Phrase("Precio", fuente1)));
                 PdfPCell cel = (new PdfPCell(new Phrase("Total", fuente1)));
          

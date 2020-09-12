@@ -259,7 +259,7 @@ public class VLoginMain extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
-        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/facturacioncarniceria/imagenes/8c0c890f-7afc-4ade-9ec3-fa594d5113e3.jpg"))); // NOI18N
+        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/facturacioncarniceria/imagenes/FORESTBEEF.jpg"))); // NOI18N
 
         javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
         rSPanelImage1.setLayout(rSPanelImage1Layout);
