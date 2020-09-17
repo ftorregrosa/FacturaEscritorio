@@ -20,10 +20,10 @@ public class ColorTabla extends DefaultTableCellRenderer{
     public Component getTableCellRendererComponent (JTable table, Object value, boolean Selected, boolean hasFocus, int row, int col){
         super.getTableCellRendererComponent(table, value, Selected, hasFocus, row, col);
 
-        if(Float.parseFloat(table.getValueAt(row, 4).toString())<=3){
-            setBackground(Color.LIGHT_GRAY);  
-        } else if(Float.parseFloat(table.getValueAt(row, 4).toString())<0){
+        if(Float.parseFloat(table.getValueAt(row, 4).toString())<=3 && Float.parseFloat(table.getValueAt(row, 4).toString())>=0){
             setBackground(Color.YELLOW);  
+        } else if(Float.parseFloat(table.getValueAt(row, 4).toString())<0){
+            setBackground(Color.LIGHT_GRAY);  
         }
         else{
             setBackground(Color.white);

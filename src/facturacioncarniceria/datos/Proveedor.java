@@ -12,6 +12,26 @@ package facturacioncarniceria.datos;
 public class Proveedor {
     private String rucProveedor;
     private String nombreProveedor;
+    private String direccionProveedor;
+    private String telefonoProveedor;
+
+    public String getDireccionProveedor() {
+        return direccionProveedor;
+    }
+
+    public void setDireccionProveedor(String direccionProveedor) {
+        this.direccionProveedor = direccionProveedor;
+    }
+
+    public String getTelefonoProveedor() {
+        return telefonoProveedor;
+    }
+
+    public void setTelefonoProveedor(String telefonoProveedor) {
+        this.telefonoProveedor = telefonoProveedor;
+    }
+    
+    
 
     public String getRucProveedor() {
         return rucProveedor;

@@ -33,9 +33,11 @@ public class ProveedorDAO {
         Connection con = null;
         try {
             con = connectionBD.getConexion();
-            PreparedStatement sentencia = con.prepareStatement("INSERT INTO proveedor(rucproveedor, nombreproveedor)VALUES (?, ?);");
+            PreparedStatement sentencia = con.prepareStatement("INSERT INTO proveedor(rucproveedor, nombreproveedor, direccionproveedor, telefonoproveedor)VALUES (?, ?, ?, ?);");
             sentencia.setString(1, proveedor.getRucProveedor());       
             sentencia.setString(2, proveedor.getNombreProveedor());
+            sentencia.setString(3, proveedor.getDireccionProveedor());
+            sentencia.setString(4, proveedor.getTelefonoProveedor());
             int i = sentencia.executeUpdate();
             if (i > 0) {
                 JOptionPane.showMessageDialog(vMain, "Se Almacenó Correctamente");
@@ -49,15 +51,17 @@ public class ProveedorDAO {
     
     
     public void visualizeProveedor(DefaultTableModel tableProvider) {
-        String data[] = new String[4];
+        String data[] = new String[5];
         Connection connect = null;
         try {
             connect = connectionBD.getConexion();
             Statement st = connect.createStatement();
-            ResultSet sentencia2 = st.executeQuery("SELECT rucproveedor, nombreproveedor FROM proveedor");
+            ResultSet sentencia2 = st.executeQuery("SELECT * FROM proveedor");
             while (sentencia2.next()) {
                 data[0] = sentencia2.getString(1);
                 data[1] = sentencia2.getString(2);
+                data[2] = sentencia2.getString(3);
+                data[3] = sentencia2.getString(4);
                 tableProvider.addRow(data);
             }
             sentencia2.close();
@@ -70,17 +74,18 @@ public class ProveedorDAO {
         Connection con = null;
         con = connectionBD.getConexion();
         try {
-            String sentencia = "UPDATE proveedor SET rucproveedor=?, nombreproveedor=? WHERE rucproveedor='"+numUsuario+"'";
+            String sentencia = "UPDATE proveedor SET nombreproveedor=?, direccionproveedor=?, telefonoproveedor=? WHERE rucproveedor='"+numUsuario+"'";
             PreparedStatement estatus = con.prepareStatement(sentencia);
-            estatus.setString(1, proveedor.getRucProveedor());
-            estatus.setString(2, proveedor.getNombreProveedor());
+            estatus.setString(1, proveedor.getNombreProveedor());
+            estatus.setString(2, proveedor.getDireccionProveedor());
+            estatus.setString(3, proveedor.getTelefonoProveedor());
             estatus.executeUpdate();
             estatus.close();
            
             JOptionPane.showMessageDialog(vMain, "Se ha modificado");
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(vMain, "No se Modifico");
+            JOptionPane.showMessageDialog(vMain, "No se Modifico "+e);
         }
     }
 }

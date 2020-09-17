@@ -271,23 +271,24 @@ public class FacturaDetalleDAO {
     
     public void addCompraVenta(String idmetologia, String cedulausuario, String fechaCompraVenta, String identificacionCompraVenta, String nombreCompraVenta, String numeroCompraVenta, double subtotal12compraventa, double base0compraventa, double iva12compraventa, double totalcompraventa) {
         int metodoPago = Integer.parseInt(idmetologia);
-        
+        int numfactura = Integer.parseInt(numeroCompraVenta);
         Connection con = null;
         try {
             con = connectionBD.getConexion();
 
-                PreparedStatement sentencia = con.prepareStatement("INSERT INTO compraventa(idmetodopago, cedulausuario, tipocompraventa, fechacompraventa, identificacioncompraventa, nombrecompraventa, numerocompraventa, subtotal12compraventa, base0compraventa, iva12compraventa, totalcompraventa)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");             
+                PreparedStatement sentencia = con.prepareStatement("INSERT INTO compraventa(idmetodopago, cedulausuario, numerofactura, tipocompraventa, fechacompraventa, identificacioncompraventa, nombrecompraventa, numerocompraventa, subtotal12compraventa, base0compraventa, iva12compraventa, totalcompraventa)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);");             
                 sentencia.setInt(1, metodoPago);
                 sentencia.setString(2, cedulausuario);
-                sentencia.setString(3, "VENTA");
-                sentencia.setString(4, fechaCompraVenta);
-                sentencia.setString(5, identificacionCompraVenta);
-                sentencia.setString(6, nombreCompraVenta);
-                sentencia.setString(7, numeroCompraVenta);
-                sentencia.setDouble(8, subtotal12compraventa);
-                sentencia.setDouble(9, base0compraventa);
-                sentencia.setDouble(10, iva12compraventa);
-                sentencia.setDouble(11, totalcompraventa);
+                sentencia.setInt(3, numfactura);
+                sentencia.setString(4, "VENTA");
+                sentencia.setString(5, fechaCompraVenta);
+                sentencia.setString(6, identificacionCompraVenta);
+                sentencia.setString(7, nombreCompraVenta);
+                sentencia.setString(8, numeroCompraVenta);
+                sentencia.setDouble(9, subtotal12compraventa);
+                sentencia.setDouble(10, base0compraventa);
+                sentencia.setDouble(11, iva12compraventa);
+                sentencia.setDouble(12, totalcompraventa);
                 
                 int i = sentencia.executeUpdate();
 

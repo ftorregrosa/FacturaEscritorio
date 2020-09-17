@@ -90,7 +90,7 @@ public interface InterfaceStrategy {
 ////    
 ////    
 ////    //comobox
-//    public void llenarComboBox(JComboBox combo);
+
 //
 //    
 //    

@@ -35,13 +35,14 @@ public class ProductoDAO {
         Connection con = null;
         try {
             con = connectionBD.getConexion();
-            PreparedStatement sentencia = con.prepareStatement("INSERT INTO producto (codigoproducto, medidaproducto, nombreproducto, precioproducto, stockproducto, ivaproducto) values (?,?,?,?,?,?)");
+            PreparedStatement sentencia = con.prepareStatement("INSERT INTO producto (codigoproducto, medidaproducto, nombreproducto, precioproducto, stockproducto, ivaproducto, tipoproducto) values (?,?,?,?,?,?,?)");
             sentencia.setString(1, producto.getCodigo());       
             sentencia.setString(2, producto.getMedida());
             sentencia.setString(3, producto.getNomProducto());
             sentencia.setFloat(4, producto.getPrecio());
             sentencia.setFloat(5, producto.getExistente());
             sentencia.setString(6, producto.getTieneIva());
+            sentencia.setString(7, producto.getTipoproducto());
             int i = sentencia.executeUpdate();
             if (i > 0) {
                 JOptionPane.showMessageDialog(vMain, "Se Almacenó Correctamente");
@@ -54,7 +55,7 @@ public class ProductoDAO {
     }
        
     public void visualizeProducto(DefaultTableModel tableProvider) {
-        String data[] = new String[6];
+        String data[] = new String[7];
         Connection connect = null;
         try {
             connect = connectionBD.getConexion();
@@ -67,6 +68,29 @@ public class ProductoDAO {
                 data[3] = sentencia2.getString(4);
                 data[4] = sentencia2.getString(5);
                 data[5] = sentencia2.getString(6);
+                data[6] = sentencia2.getString(7);
+                tableProvider.addRow(data);
+            }
+            sentencia2.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(vMain, ex, "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void visualizeFiltro(DefaultTableModel tableProvider, String filtroTipo) {
+        String data[] = new String[7];
+        Connection connect = null;
+        try {
+            connect = connectionBD.getConexion();
+            Statement st = connect.createStatement();
+            ResultSet sentencia2 = st.executeQuery("SELECT * FROM producto WHERE tipoproducto = '"+filtroTipo+"'order by codigoproducto asc;");
+            while (sentencia2.next()) {
+                data[0] = sentencia2.getString(1);
+                data[1] = sentencia2.getString(2);
+                data[2] = sentencia2.getString(3);
+                data[3] = sentencia2.getString(4);
+                data[4] = sentencia2.getString(5);
+                data[5] = sentencia2.getString(6);
+                data[6] = sentencia2.getString(7);
                 tableProvider.addRow(data);
             }
             sentencia2.close();
@@ -105,13 +129,14 @@ public class ProductoDAO {
         Connection con = null;
         con = connectionBD.getConexion();
         try {
-            String sentencia = "UPDATE producto SET medidaproducto=?, nombreproducto=?, precioproducto=?, stockproducto=?, ivaproducto=? WHERE codigoproducto='"+numUsuario+"'";
+            String sentencia = "UPDATE producto SET medidaproducto=?, nombreproducto=?, precioproducto=?, stockproducto=?, ivaproducto=?, tipoproducto=? WHERE codigoproducto='"+numUsuario+"'";
             PreparedStatement estatus = con.prepareStatement(sentencia);
             estatus.setString(1, producto.getMedida());
             estatus.setString(2, producto.getNomProducto());
             estatus.setFloat(3, producto.getPrecio());
             estatus.setFloat(4, producto.getExistente());
             estatus.setString(5, producto.getTieneIva());
+            estatus.setString(6, producto.getTipoproducto());
             estatus.executeUpdate();
             estatus.close();
            
@@ -121,6 +146,24 @@ public class ProductoDAO {
             JOptionPane.showMessageDialog(vMain, "No se Modifico");
         }
          
+    }
+     
+    public void llenarCombo(JComboBox comboCorreo) {
+        String data[] = new String[2];
+        Connection connect = null;
+        try {
+            connect = connectionBD.getConexion();
+            Statement st = connect.createStatement();
+            ResultSet sentencia2 = st.executeQuery("SELECT DISTINCT tipoproducto FROM producto");
+            //comboCorreo.addItem("tecnico2@mastercontrol.com.ec");
+            while (sentencia2.next()) {
+               // data[0] = sentencia2.getString(1);
+                comboCorreo.addItem(sentencia2.getString("tipoproducto"));
+            }
+            sentencia2.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(vMain, ex, "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
     }
      
 }

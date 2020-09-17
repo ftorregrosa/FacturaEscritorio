@@ -29,6 +29,7 @@ import facturacioncarniceria.vista.VPrincipal;
 import facturacioncarniceria.vista.VFactura;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -106,6 +107,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 
     
     TableRowSorter trs;
+    TableRowSorter trs1;
 
     public CFacturaDetalle(Context context, VFactura vfacturaDetalle, VPrincipal vmain, int numero) {
         facturaDetalleDAO = new FacturaDetalleDAO();
@@ -121,6 +123,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         this.vfacturaDetalle.getBtnActualizarProductos().addActionListener(this);
         this.vfacturaDetalle.getBtnEditarTabla().addActionListener(this);
         this.vfacturaDetalle.getTxtBuscarProductosFactura().addKeyListener(this);
+        this.vfacturaDetalle.getTxtBuscarCodigo().addKeyListener(this);
         this.vfacturaDetalle.getTablaProductosFactura().addMouseListener(this);
         this.vfacturaDetalle.getTablaFactura().addMouseListener(this);
   
@@ -552,6 +555,9 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         if (vfacturaDetalle.getTxtBuscarProductosFactura()== ae.getSource()) {
             trs.setRowFilter(RowFilter.regexFilter("(?i)"+vfacturaDetalle.getTxtBuscarProductosFactura().getText(), 2));
         }
+        if (vfacturaDetalle.getTxtBuscarCodigo()== ae.getSource()) {
+            trs1.setRowFilter(RowFilter.regexFilter("(?i)"+vfacturaDetalle.getTxtBuscarCodigo().getText(), 0));
+        }
         
     }
 
@@ -561,6 +567,11 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         if (vfacturaDetalle.getTxtBuscarProductosFactura()== ae.getSource()) {
            trs = new TableRowSorter(modeloTablaFacturaProdutos);
            vfacturaDetalle.getTablaProductosFactura().setRowSorter(trs);
+        }
+        
+        if (vfacturaDetalle.getTxtBuscarCodigo()== ae.getSource()) {
+           trs1 = new TableRowSorter(modeloTablaFacturaProdutos);
+           vfacturaDetalle.getTablaProductosFactura().setRowSorter(trs1);
         }
     }
 
@@ -678,7 +689,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         return metodo;
     }
     public void crearCarpetas1(String nombreProyecto) {
-        File directorio = new File("c:\\FACTURACION FOREST BEEF\\" + nombreProyecto);
+        File directorio = new File("A:\\FACTURACION FOREST BEEF\\" + nombreProyecto);
         directorio.mkdirs();
     }
     
@@ -690,7 +701,7 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         String encarProyecto = vprincipal.getLblNombreUsuario().getText();
         String fechaPedido = vfacturaDetalle.getTxtFechaFactura().getText();
         crearCarpetas1(fechaPedido);
-        JFileChooser dlg = new JFileChooser("C:/FACTURACION FOREST BEEF/"+fechaPedido);
+        JFileChooser dlg = new JFileChooser("A:/FACTURACION FOREST BEEF/"+fechaPedido);
         dlg.setSelectedFile(new File("FAC_" + fechaPedido + "_" + codigoPedido));
         
         Font fuente1 = new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD);
@@ -842,19 +853,26 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             restarStock();
             contextFacturaDetalle.RunAnadirFacturaDetalle(modeloTablaFactura, vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), vprincipal.getLblCedula().getText(),resultadoMetodoPago);
             guardarCompraVenta();
-            
+            try{
             double superTotal = 0;
             String entrega = JOptionPane.showInputDialog(vprincipal, "Intruduzca la precio");
             float entregaF = Float.parseFloat(entrega);
             superTotal = (entregaF-(Float.parseFloat(vfacturaDetalle.getTxtTotalFactura().getText())));
             
+            
 
             superTotal = Math.round(superTotal * 100) / 100d;
             
-            crearPDF();
+            
             
             
             JOptionPane.showMessageDialog(vprincipal, "VUELTO: "+ superTotal);
+            
+            }catch(HeadlessException | NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(vprincipal, "No a ingresado bn el valor recibido");
+            }
+            crearPDF();
             vfacturaDetalle.dispose();
         }
         

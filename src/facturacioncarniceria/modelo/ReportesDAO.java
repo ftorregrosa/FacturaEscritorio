@@ -51,19 +51,57 @@ public class ReportesDAO {
 //    }
     
     
-    public void visualizeVenta(DefaultTableModel tableProvider, String fechaIncio, String fechaFin) {
+public void visualizeVenta(DefaultTableModel tableProvider, String fechaIncio, String fechaFin) {
+        String data[] = new String[13];
+        Connection connect = null;
+        try {
+            connect = connectionBD.getConexion();
+            Statement st = connect.createStatement();
+            ResultSet sentencia2 = st.executeQuery("SELECT A.idcompraventa, A.tipocompraventa, A.fechacompraventa, \n" +
+"A.identificacioncompraventa, A.nombrecompraventa, A.numerocompraventa, A.subtotal12compraventa, \n" +
+"A.base0compraventa, A.iva12compraventa, A.totalcompraventa, \n" +
+"B.nombrepago, C.nombreusuario ||' '|| C.apellidousuario, D.anuladafactura\n" +
+"FROM compraventa A, metodopago B, usuario C, factura D\n" +
+"WHERE D.numerofactura=A.numerofactura AND A.idmetodopago = B.idmetodopago AND A.cedulausuario=C.cedulausuario\n" +
+"AND A.fechacompraventa >=  '" + fechaIncio + "' and A.fechacompraventa <=  '" + fechaFin + "' \n" +
+"AND A.tipocompraventa='VENTA' ORDER BY A.idcompraventa ASC;");
+            while (sentencia2.next()) {
+                data[0] = sentencia2.getString(1);
+                data[1] = sentencia2.getString(2);
+                data[2] = sentencia2.getString(3);
+                data[3] = sentencia2.getString(4);
+                data[4] = sentencia2.getString(5);
+                data[5] = sentencia2.getString(6);
+                data[6] = sentencia2.getString(7);
+                data[7] = sentencia2.getString(8);
+                data[8] = sentencia2.getString(9);
+                data[9] = sentencia2.getString(10);
+                data[10] = sentencia2.getString(11);
+                data[11] = sentencia2.getString(12);
+                data[12] = sentencia2.getString(13);
+
+                tableProvider.addRow(data);
+            }
+            sentencia2.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(vMain, ex, "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+public void visualizeCompraAnuladas(DefaultTableModel tableProvider, String fechaIncio, String fechaFin) {
         String data[] = new String[12];
         Connection connect = null;
         try {
             connect = connectionBD.getConexion();
             Statement st = connect.createStatement();
-            ResultSet sentencia2 = st.executeQuery("SELECT A.idcompraventa, A.tipocompraventa, A.fechacompraventa, \n"
-                    + "A.identificacioncompraventa, A.nombrecompraventa, A.numerocompraventa, A.subtotal12compraventa, \n"
-                    + "A.base0compraventa, A.iva12compraventa, A.totalcompraventa, B.nombrepago, C.nombreusuario ||' '|| C.apellidousuario\n"
-                    + "FROM compraventa A, metodopago B, usuario C\n"
-                    + "WHERE A.idmetodopago = B.idmetodopago AND A.cedulausuario=C.cedulausuario \n"
-                    + "AND A.fechacompraventa >=  '" + fechaIncio + "' and A.fechacompraventa <=  '" + fechaFin + "' \n"
-                    + "AND A.tipocompraventa='VENTA' ORDER BY A.idcompraventa ASC;");
+            ResultSet sentencia2 = st.executeQuery("SELECT A.idcompraventa, A.tipocompraventa, A.fechacompraventa, \n" +
+"A.identificacioncompraventa, A.nombrecompraventa, A.numerocompraventa, A.subtotal12compraventa, \n" +
+"A.base0compraventa, A.iva12compraventa, A.totalcompraventa, \n" +
+"B.nombrepago, C.nombreusuario ||' '|| C.apellidousuario\n" +
+"FROM compraventa A, metodopago B, usuario C, factura D\n" +
+"WHERE D.numerofactura=A.numerofactura AND A.idmetodopago = B.idmetodopago AND A.cedulausuario=C.cedulausuario\n" +
+"AND A.fechacompraventa >=  '" + fechaIncio + "'and A.fechacompraventa <=  '" + fechaFin + "' AND D.anuladafactura = 'NO'\n" +
+"AND A.tipocompraventa='VENTA' ORDER BY A.idcompraventa ASC;");
             while (sentencia2.next()) {
                 data[0] = sentencia2.getString(1);
                 data[1] = sentencia2.getString(2);
@@ -112,6 +150,39 @@ public class ReportesDAO {
                 data[9] = sentencia2.getString(10);
                 data[10] = sentencia2.getString(11);
                 data[11] = sentencia2.getString(12);
+
+                tableProvider.addRow(data);
+            }
+            sentencia2.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(vMain, ex, "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+    
+    public void visualizeCompraProveedor(DefaultTableModel tableProvider) {
+        String data[] = new String[12];
+        Connection connect = null;
+        try {
+            connect = connectionBD.getConexion();
+            Statement st = connect.createStatement();
+            ResultSet sentencia2 = st.executeQuery("SELECT A.numerocompra, A.facturacompra, A.codigoproducto, B.nombreproducto, A.cantidadcompra, A.preciocompra,\n" +
+"ROUND((A.cantidadcompra*A.preciocompra),2), A.fechacompra, C.nombreproveedor, C.direccionproveedor, C.telefonoproveedor\n" +
+"FROM compra A, producto B, proveedor C\n" +
+"WHERE A.codigoproducto=B.codigoproducto AND A.rucproveedor=C.rucproveedor;");
+            while (sentencia2.next()) {
+                data[0] = sentencia2.getString(1);
+                data[1] = sentencia2.getString(2);
+                data[2] = sentencia2.getString(3);
+                data[3] = sentencia2.getString(4);
+                data[4] = sentencia2.getString(5);
+                data[5] = sentencia2.getString(6);
+                data[6] = sentencia2.getString(7);
+                data[7] = sentencia2.getString(8);
+                data[8] = sentencia2.getString(9);
+                data[9] = sentencia2.getString(10);
+                data[10] = sentencia2.getString(11);
 
                 tableProvider.addRow(data);
             }

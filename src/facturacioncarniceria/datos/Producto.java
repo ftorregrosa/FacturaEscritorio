@@ -15,7 +15,16 @@ public class Producto {
     private float precio;
     private float existente;
     private String tieneIva;
+    private String tipoproducto;
 
+    public String getTipoproducto() {
+        return tipoproducto;
+    }
+
+    public void setTipoproducto(String tipoproducto) {
+        this.tipoproducto = tipoproducto;
+    }
+     
     public String getTieneIva() {
         return tieneIva;
     }

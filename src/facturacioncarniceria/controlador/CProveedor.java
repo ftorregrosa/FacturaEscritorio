@@ -74,21 +74,26 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
 
         modeloTablaProveedor.addColumn("RUC");
         modeloTablaProveedor.addColumn("RAZON SOCIAL");
+        modeloTablaProveedor.addColumn("DIRECCION");
+        modeloTablaProveedor.addColumn("TELEFONO");
         vproveedor.getTablaProveedor().setModel(modeloTablaProveedor);        
     }
     
     public void validarCampos()
     {
         validar.validarLetras(vproveedor.getTxtNombreProveedor());
-        validar.validarNumeros(vproveedor.getTxtRuc());     
+        validar.validarNumeros(vproveedor.getTxtRuc());  
+        validar.validarNumeros(vproveedor.getTxtTelefonoProveedor());
         validar.limitarCaracteres(vproveedor.getTxtRuc(), 13);
     }
     
     public void iniciarVentana() {
         vproveedor.show();
         validarCampos();
-        vproveedor.getTablaProveedor().getColumnModel().getColumn(0).setPreferredWidth(100);
-        vproveedor.getTablaProveedor().getColumnModel().getColumn(1).setPreferredWidth(400);
+        vproveedor.getTablaProveedor().getColumnModel().getColumn(0).setPreferredWidth(50);
+        vproveedor.getTablaProveedor().getColumnModel().getColumn(1).setPreferredWidth(200);
+        vproveedor.getTablaProveedor().getColumnModel().getColumn(2).setPreferredWidth(300);
+        vproveedor.getTablaProveedor().getColumnModel().getColumn(3).setPreferredWidth(100);
 
 
         contextProveedor.RunVisualizar(modeloTablaProveedor, 1);
@@ -96,6 +101,7 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
 
         vproveedor.getTxtNombreProveedor().setDocument(new Validaciones());
         vproveedor.getTxtBuscarProveedor().setDocument(new Validaciones());
+        
 
         
         vproveedor.getBtnModificarProveedor().setEnabled(false);
@@ -115,6 +121,8 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
     {
         vproveedor.getTxtRuc().setText("");
         vproveedor.getTxtNombreProveedor().setText("");
+        vproveedor.getTxtDireccionProveedor().setText("");
+        vproveedor.getTxtTelefonoProveedor().setText("");
     }
     
     @Override
@@ -147,6 +155,8 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
                 if (fila >= 0) {
                     vproveedor.getTxtRuc().setText(vproveedor.getTablaProveedor().getValueAt(fila,0).toString());
                     vproveedor.getTxtNombreProveedor().setText(vproveedor.getTablaProveedor().getValueAt(fila,1).toString());
+                    vproveedor.getTxtDireccionProveedor().setText(vproveedor.getTablaProveedor().getValueAt(fila,2).toString());
+                    vproveedor.getTxtTelefonoProveedor().setText(vproveedor.getTablaProveedor().getValueAt(fila,3).toString());
                     vproveedor.getBtnGuardarProveedor().setEnabled(false);
                     vproveedor.getBtnModificarProveedor().setEnabled(true);
                     vproveedor.getTablaProveedor().setEnabled(false);
@@ -183,12 +193,14 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
             
             try {
                 Proveedor proveedor = new Proveedor();
-                if (vproveedor.getTxtNombreProveedor().getText().equals("") || vproveedor.getTxtRuc().getText().equals("") ) {
+                if (vproveedor.getTxtNombreProveedor().getText().equals("") || vproveedor.getTxtRuc().getText().equals("") || vproveedor.getTxtDireccionProveedor().getText().equals("") || vproveedor.getTxtTelefonoProveedor().getText().equals("") ) {
                     JOptionPane.showMessageDialog(vprincipal, "Llene todos lo campos antes de guardar");
                 
                 }else{
                     proveedor.setRucProveedor(vproveedor.getTxtRuc().getText());
                     proveedor.setNombreProveedor(vproveedor.getTxtNombreProveedor().getText());
+                    proveedor.setDireccionProveedor(vproveedor.getTxtDireccionProveedor().getText());
+                    proveedor.setTelefonoProveedor(vproveedor.getTxtTelefonoProveedor().getText());
                     contextProveedor.RunAnadir(proveedor, 1);
                     limpiarCampos();
                 }
@@ -208,6 +220,8 @@ public class CProveedor implements KeyListener, MouseListener, ActionListener {
             }else{
                 proveedor.setRucProveedor(vproveedor.getTxtRuc().getText());
                 proveedor.setNombreProveedor(vproveedor.getTxtNombreProveedor().getText());
+                proveedor.setDireccionProveedor(vproveedor.getTxtDireccionProveedor().getText());
+                proveedor.setTelefonoProveedor(vproveedor.getTxtTelefonoProveedor().getText());
                 int fila = vproveedor.getTablaProveedor().getSelectedRow();
                 if (fila >= 0) {
                     contextProveedor.RunModificar(proveedor, vproveedor.getTablaProveedor().getValueAt(fila, 0).toString());

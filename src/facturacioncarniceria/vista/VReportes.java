@@ -21,6 +21,67 @@ import rojerusan.RSDateChooser;
  */
 public class VReportes extends javax.swing.JInternalFrame {
 
+    public RSButtonRiple getBtnExportar1() {
+        return btnExportar1;
+    }
+
+    public void setBtnExportar1(RSButtonRiple btnExportar1) {
+        this.btnExportar1 = btnExportar1;
+    }
+
+    public RSButtonRiple getBtnExportar2() {
+        return btnExportar2;
+    }
+
+    public void setBtnExportar2(RSButtonRiple btnExportar2) {
+        this.btnExportar2 = btnExportar2;
+    }
+    
+    
+    
+
+    public RSButtonRiple getBtnActualizarCompra() {
+        return btnActualizarCompra;
+    }
+
+    public void setBtnActualizarCompra(RSButtonRiple btnActualizarCompra) {
+        this.btnActualizarCompra = btnActualizarCompra;
+    }
+
+    public JTable getTablaReporteCompra1() {
+        return tablaReporteCompra1;
+    }
+
+    public void setTablaReporteCompra1(JTable tablaReporteCompra1) {
+        this.tablaReporteCompra1 = tablaReporteCompra1;
+    }
+
+    public JTextField getTxtBuscarProducto() {
+        return txtBuscarProducto;
+    }
+
+    public void setTxtBuscarProducto(JTextField txtBuscarProducto) {
+        this.txtBuscarProducto = txtBuscarProducto;
+    }
+
+    public JTextField getTxtCodigoProducto() {
+        return txtCodigoProducto;
+    }
+
+    public void setTxtCodigoProducto(JTextField txtCodigoProducto) {
+        this.txtCodigoProducto = txtCodigoProducto;
+    }
+
+    public JTextField getTxtProveedorBuscar() {
+        return txtProveedorBuscar;
+    }
+
+    public void setTxtProveedorBuscar(JTextField txtProveedorBuscar) {
+        this.txtProveedorBuscar = txtProveedorBuscar;
+    }
+    
+    
+
     public RSButtonRiple getBtnExportarCompras() {
         return btnExportarCompras;
     }
@@ -191,6 +252,19 @@ public class VReportes extends javax.swing.JInternalFrame {
         CAJA = new java.awt.Label();
         txtNumFacturas = new javax.swing.JTextField();
         CAJA1 = new java.awt.Label();
+        btnExportar1 = new rojeru_san.RSButtonRiple();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tablaReporteCompra1 = new javax.swing.JTable();
+        btnActualizarCompra = new rojeru_san.RSButtonRiple();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txtBuscarProducto = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtCodigoProducto = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtProveedorBuscar = new javax.swing.JTextField();
+        btnExportar2 = new rojeru_san.RSButtonRiple();
 
         setClosable(true);
         setMaximizable(true);
@@ -384,14 +458,24 @@ public class VReportes extends javax.swing.JInternalFrame {
         dcFinal1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         txtCaja.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtCaja.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         CAJA.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         CAJA.setText("CAJA");
 
         txtNumFacturas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtNumFacturas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         CAJA1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         CAJA1.setText("Num Facturas");
+
+        btnExportar1.setBackground(new java.awt.Color(255, 153, 0));
+        btnExportar1.setText("Exportar");
+        btnExportar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -411,9 +495,10 @@ public class VReportes extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane7)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
                         .addComponent(btnActualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExportar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84)
                         .addComponent(CAJA1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNumFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -450,11 +535,119 @@ public class VReportes extends javax.swing.JInternalFrame {
                                 .addComponent(CAJA1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(btnActualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(46, 46, 46))
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnActualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnExportar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(28, 28, 28))
         );
 
-        pnlVisualizar.addTab("Caja", jPanel8);
+        pnlVisualizar.addTab("Ventas/Caja", jPanel8);
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 204)));
+
+        tablaReporteCompra1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        tablaReporteCompra1.setForeground(new java.awt.Color(0, 0, 255));
+        tablaReporteCompra1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(tablaReporteCompra1);
+
+        btnActualizarCompra.setBackground(new java.awt.Color(0, 204, 0));
+        btnActualizarCompra.setText("Actualizar");
+        btnActualizarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarCompraActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("COMPRAS");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Producto:");
+
+        txtBuscarProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Codigo:");
+
+        txtCodigoProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Proveedor:");
+
+        txtProveedorBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        btnExportar2.setBackground(new java.awt.Color(255, 153, 0));
+        btnExportar2.setText("Exportar");
+        btnExportar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportar2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtProveedorBuscar))
+                    .addComponent(jScrollPane8)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(151, 151, 151)
+                .addComponent(btnActualizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 326, Short.MAX_VALUE)
+                .addComponent(btnExportar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(296, 296, 296))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtProveedorBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExportar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
+        );
+
+        pnlVisualizar.addTab("Compras", jPanel9);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -496,35 +689,60 @@ public class VReportes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnActualizar1ActionPerformed
 
+    private void btnActualizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCompraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarCompraActionPerformed
+
+    private void btnExportar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportar1ActionPerformed
+
+    private void btnExportar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportar2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label CAJA;
     private java.awt.Label CAJA1;
     private rojeru_san.RSButtonRiple btnActualizar;
     private rojeru_san.RSButtonRiple btnActualizar1;
+    private rojeru_san.RSButtonRiple btnActualizarCompra;
+    private rojeru_san.RSButtonRiple btnExportar1;
+    private rojeru_san.RSButtonRiple btnExportar2;
     private rojeru_san.RSButtonRiple btnExportarCompras;
     private rojeru_san.RSButtonRiple btnExportarVentas;
     private com.toedter.calendar.JDateChooser dcFinal;
     private com.toedter.calendar.JDateChooser dcFinal1;
     private com.toedter.calendar.JDateChooser dcInicial;
     private com.toedter.calendar.JDateChooser dcInicial1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane pnlVisualizar;
     private javax.swing.JTable tablaReporteCompra;
+    private javax.swing.JTable tablaReporteCompra1;
     private javax.swing.JTable tablaReporteVenta;
     private javax.swing.JTable tablaReporteVenta1;
+    private javax.swing.JTextField txtBuscarProducto;
     private javax.swing.JTextField txtCaja;
+    private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtNumFacturas;
+    private javax.swing.JTextField txtProveedorBuscar;
     // End of variables declaration//GEN-END:variables
 }

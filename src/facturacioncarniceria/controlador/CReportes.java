@@ -87,9 +87,22 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
             }
         }
     };
+    
+    DefaultTableModel  modeloTablaCompras1 = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int filas, int columnas) {
+            if (columnas == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
 
     
     TableRowSorter trs;
+    TableRowSorter trs1;
+    TableRowSorter trs2;
 
     public CReportes(Context context, VReportes vreportes, VPrincipal vmain) {
         reportesDAO = new ReportesDAO();
@@ -98,10 +111,17 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         this.vprincipal = vmain;
         this.contextReportes = new Context(strategyReportes);
         
+        this.vreportes.getTxtBuscarProducto().addKeyListener(this);
+        this.vreportes.getTxtCodigoProducto().addKeyListener(this);
+        this.vreportes.getTxtProveedorBuscar().addKeyListener(this);
+        
         this.vreportes.getBtnActualizar().addActionListener(this);
+        this.vreportes.getBtnActualizarCompra().addActionListener(this);
         this.vreportes.getBtnExportarCompras().addActionListener(this);
 //       // this.vreportes.getJmiModificar().addActionListener(this);
         this.vreportes.getBtnExportarVentas().addActionListener(this);
+        this.vreportes.getBtnExportar1().addActionListener(this);
+        this.vreportes.getBtnExportar2().addActionListener(this);
         
         this.vreportes.getBtnActualizar1().addActionListener(this);
 //       // this.vreportes.getJmiModificar().addActionListener(this);
@@ -123,6 +143,19 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         modeloTablaCompras.addColumn("PAGO");
         modeloTablaCompras.addColumn("REALIZADO");
         vreportes.getTablaReporteCompra().setModel(modeloTablaCompras);
+        
+        modeloTablaCompras1.addColumn("#");
+        modeloTablaCompras1.addColumn("FACT. COMPRA");
+        modeloTablaCompras1.addColumn("COD. PRODUCTO");
+        modeloTablaCompras1.addColumn("NOMBRE");
+        modeloTablaCompras1.addColumn("CANTIDAD");
+        modeloTablaCompras1.addColumn("PRECIO");
+        modeloTablaCompras1.addColumn("TOTAL");
+        modeloTablaCompras1.addColumn("FECHA");
+        modeloTablaCompras1.addColumn("PROVEEDOR");
+        modeloTablaCompras1.addColumn("DIRECCION");
+        modeloTablaCompras1.addColumn("TELEFONO");
+        vreportes.getTablaReporteCompra1().setModel(modeloTablaCompras1);
 
         modeloTablaVentas.addColumn("#");
         modeloTablaVentas.addColumn("TIPO");
@@ -136,6 +169,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         modeloTablaVentas.addColumn("TOTAL");
         modeloTablaVentas.addColumn("PAGO");
         modeloTablaVentas.addColumn("REALIZADO");
+        modeloTablaVentas.addColumn("ANULADO");
         vreportes.getTablaReporteVenta().setModel(modeloTablaVentas);
         
         modeloTablaVentas1.addColumn("#");
@@ -150,6 +184,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         modeloTablaVentas1.addColumn("TOTAL");
         modeloTablaVentas1.addColumn("PAGO");
         modeloTablaVentas1.addColumn("REALIZADO");
+
         vreportes.getTablaReporteVenta1().setModel(modeloTablaVentas1);
     }
 
@@ -161,6 +196,9 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         vreportes.show();
         validarCampos();
         
+        vreportes.getTxtCodigoProducto().setDocument(new Validaciones());
+        vreportes.getTxtProveedorBuscar().setDocument(new Validaciones());
+        vreportes.getTxtBuscarProducto().setDocument(new Validaciones());
         
         vreportes.getTablaReporteCompra().getColumnModel().getColumn(0).setPreferredWidth(2);
         vreportes.getTablaReporteCompra().getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -175,6 +213,18 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         vreportes.getTablaReporteCompra().getColumnModel().getColumn(10).setPreferredWidth(20);
         vreportes.getTablaReporteCompra().getColumnModel().getColumn(11).setPreferredWidth(100);
         
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(0).setPreferredWidth(15);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(1).setPreferredWidth(25);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(2).setPreferredWidth(15);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(3).setPreferredWidth(200);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(4).setPreferredWidth(25);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(5).setPreferredWidth(25);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(6).setPreferredWidth(25);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(7).setPreferredWidth(25);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(8).setPreferredWidth(100);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(9).setPreferredWidth(200);
+        vreportes.getTablaReporteCompra1().getColumnModel().getColumn(10).setPreferredWidth(50);
+        
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(0).setPreferredWidth(2);
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(1).setPreferredWidth(50);
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(2).setPreferredWidth(40);
@@ -187,6 +237,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(9).setPreferredWidth(20);
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(10).setPreferredWidth(20);
         vreportes.getTablaReporteVenta().getColumnModel().getColumn(11).setPreferredWidth(100);
+        vreportes.getTablaReporteVenta().getColumnModel().getColumn(12).setPreferredWidth(50);
         
         vreportes.getTablaReporteVenta1().getColumnModel().getColumn(0).setPreferredWidth(2);
         vreportes.getTablaReporteVenta1().getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -200,6 +251,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         vreportes.getTablaReporteVenta1().getColumnModel().getColumn(9).setPreferredWidth(20);
         vreportes.getTablaReporteVenta1().getColumnModel().getColumn(10).setPreferredWidth(20);
         vreportes.getTablaReporteVenta1().getColumnModel().getColumn(11).setPreferredWidth(100);
+
         
         Date fechaActual = new Date();
         vreportes.getDcInicial().setDate(fechaActual);
@@ -219,7 +271,9 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         contextReportes.RunvisualizeCompraVenta(modeloTablaCompras, fechaIngreso, fechaIngresoFin, 1);
         contextReportes.RunvisualizeCompraVenta(modeloTablaVentas, fechaIngreso, fechaIngresoFin, 2);
         
-        contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin1, 2);
+        contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin1, 3);
+        
+        contextReportes.RunVisualizar(modeloTablaCompras1, 0);
 
         vprincipal.getLblCedula().getText();
         // contextReportes.RunVisualizeContra(vmodificarcontra.getTxtCedula(),vmodificarcontra.getTxtContra(),vmodificarcontra.getTxtNombres(),vmodificarcontra.getTxtCargo(),vmain.getLblcedula().getText());
@@ -228,6 +282,13 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
     public void cleanTableCompra() {
         for (int i = 0; i < vreportes.getTablaReporteCompra().getRowCount(); i++) {
             modeloTablaCompras.removeRow(i);
+            i -= 1;
+        }
+    }
+    
+    public void cleanTableCompra1() {
+        for (int i = 0; i < vreportes.getTablaReporteCompra1().getRowCount(); i++) {
+            modeloTablaCompras1.removeRow(i);
             i -= 1;
         }
     }
@@ -247,17 +308,39 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
     }
 
     public void limpiarCampos() {
-
+        vreportes.getTxtBuscarProducto().setText(null);
+        vreportes.getTxtCodigoProducto().setText("");
+        vreportes.getTxtProveedorBuscar().setText("");
     }
 
     @Override
     public void keyReleased(KeyEvent ae) {
+         if (vreportes.getTxtCodigoProducto()== ae.getSource()) {
+            trs.setRowFilter(RowFilter.regexFilter("(?i)"+vreportes.getTxtCodigoProducto().getText(), 2));
+        }
+         if (vreportes.getTxtBuscarProducto()== ae.getSource()) {
+            trs1.setRowFilter(RowFilter.regexFilter("(?i)"+vreportes.getTxtBuscarProducto().getText(), 3));
+        }
+         if (vreportes.getTxtProveedorBuscar()== ae.getSource()) {
+            trs2.setRowFilter(RowFilter.regexFilter("(?i)"+vreportes.getTxtProveedorBuscar().getText(), 8));
+        }
 
     }
 
     @Override
     public void keyTyped(KeyEvent ae) {
-
+        if (vreportes.getTxtCodigoProducto()== ae.getSource()) {
+           trs = new TableRowSorter(modeloTablaCompras1);
+           vreportes.getTablaReporteCompra1().setRowSorter(trs);
+        }
+        if (vreportes.getTxtBuscarProducto()== ae.getSource()) {
+           trs1 = new TableRowSorter(modeloTablaCompras1);
+           vreportes.getTablaReporteCompra1().setRowSorter(trs1);
+        }
+        if (vreportes.getTxtProveedorBuscar()== ae.getSource()) {
+           trs2 = new TableRowSorter(modeloTablaCompras1);
+           vreportes.getTablaReporteCompra1().setRowSorter(trs2);
+        }
     }
 
     @Override
@@ -306,7 +389,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
     
         public void crearCarpetas(String compraVenta, String fechaInicio, String fechaFinal) {
 
-        File directorio = new File("C:\\COMPRA VENTA\\" + compraVenta+"_"+fechaInicio+"_"+fechaFinal);
+        File directorio = new File("A:\\COMPRA VENTA\\" + compraVenta+"_"+fechaInicio+"_"+fechaFinal);
         directorio.mkdirs();
     }
 
@@ -316,12 +399,14 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         String fechaIngresoFin = sdf.format(vreportes.getDcFinal().getDate());
         crearCarpetas(compraVenta,fechaIngreso,fechaIngresoFin);
         
-        JFileChooser chooser = new JFileChooser("C:/COMPRA VENTA/" + compraVenta+"_"+fechaIngreso+"_"+fechaIngresoFin);
+        JFileChooser chooser = new JFileChooser("A:/COMPRA VENTA/" + compraVenta+"_"+fechaIngreso+"_"+fechaIngresoFin);
         chooser.setSelectedFile(new File("REPORTE_" + compraVenta+"_"+fechaIngreso+"_"+fechaIngresoFin));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");
         chooser.setFileFilter(filter);
         chooser.setDialogTitle("Guardar archivo");
         chooser.setAcceptAllFileFilterUsed(false);
+        
+        
         if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
             String ruta = chooser.getSelectedFile().toString().concat(".xls");
             try {
@@ -396,9 +481,25 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
                 Logger.getLogger(CProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        if (this.vreportes.getBtnExportar1()== ae.getSource()) {
+            try {
+                exportarExcel(vreportes.getTablaReporteVenta1(),"VENTAS/CAJA");
+            } catch (IOException ex) {
+                Logger.getLogger(CProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (this.vreportes.getBtnExportar2()== ae.getSource()) {
+            try {
+                exportarExcel(vreportes.getTablaReporteCompra1(),"COMPRAS/PROVEEDORES");
+            } catch (IOException ex) {
+                Logger.getLogger(CProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (this.vreportes.getBtnActualizar() == ae.getSource()) {
             cleanTableCompra();
-            cleanTableVenta();
+            cleanTableVenta1();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -409,6 +510,14 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
 //        vreportes.getDcFinal().setDate(fechaActual);
             contextReportes.RunvisualizeCompraVenta(modeloTablaCompras, fechaIngreso, fechaIngresoFin, 1);
             contextReportes.RunvisualizeCompraVenta(modeloTablaVentas, fechaIngreso, fechaIngresoFin, 2);
+        }
+        
+        if (this.vreportes.getBtnActualizarCompra()== ae.getSource()) {
+            cleanTableCompra1();
+            limpiarCampos();
+            vreportes.getTxtBuscarProducto().requestFocus();
+            contextReportes.RunVisualizar(modeloTablaCompras1, 0);
+            
         }
         
   

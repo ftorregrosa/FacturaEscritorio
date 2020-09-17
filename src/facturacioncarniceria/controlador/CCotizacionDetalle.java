@@ -64,6 +64,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -105,18 +107,19 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
 
     TableRowSorter trs;
 
-    public void crearCarpetas1(String nombreProyecto) {
-        File directorio = new File("c:\\COTIZACION FOREST BEEF\\" + nombreProyecto);
+    public void crearCarpetas1() {
+        File directorio = new File("A:\\COTIZACION FOREST BEEF\\");
         directorio.mkdirs();
     }
 
     public void crearPDF() {
+        
         String codigoPedido = vcotizacionDetalle.getTxtNumeroCotizacion().getText();
         String nomProyecto = vcotizacionDetalle.getTxtClienteCotizacion().getText();
         String encarProyecto = vprincipal.getLblNombreUsuario().getText();
         String fechaPedido = vcotizacionDetalle.getTxtFechaInicioCo().getText();
-        crearCarpetas1(nomProyecto);
-        JFileChooser dlg = new JFileChooser("c:/COTIZACION FOREST BEEF/");
+        crearCarpetas1();
+        JFileChooser dlg = new JFileChooser("A:/COTIZACION FOREST BEEF/");
         dlg.setSelectedFile(new File("CT_" + nomProyecto + "_" + codigoPedido));
         
         Font fuente = new Font(Font.FontFamily.COURIER, 14, Font.BOLD);
@@ -124,7 +127,9 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         Font fuente1 = new Font(Font.FontFamily.COURIER, 11, Font.BOLD);
         Font fuente2 = new Font(Font.FontFamily.COURIER, 11);
         Font fuente3 = new Font(Font.FontFamily.COURIER, 11, Font.BOLD);
-
+          //URL resUrl = this.getClass().getResource("facturacioncarniceria/imagenes/FORESTBEEF.jpg");
+    //      System.out.println(""+resUrl);
+     
         int opcion = dlg.showSaveDialog(vprincipal);
         if (opcion == JFileChooser.APPROVE_OPTION) {
 
@@ -140,13 +145,15 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 Document doc = new Document();
                 PdfWriter.getInstance(doc, archivo);
                 doc.open();
-               // Image imagen = Image.getInstance("facturacioncarniceria/imagenes/FORESTBEEF.jpg");
-                Image imagen = Image.getInstance("src/facturacioncarniceria/imagenes/FORESTBEEF.jpg");
-               // Image imagen = Image.getInstance(new FileOutputStream('FORESTBEEF.jpg'));
+              
+                Image imagen = Image.getInstance("A:Facturacion/imagenes/FORESTBEEF.jpg");
+               // this.getClass().getResourceAsStream
+//  seticonImage
+               //Image imagen = Image.getInstance(CCotizacionDetalle.class.getResource("imagenes/FORESTBEEF.jpg"));
                 imagen.scaleToFit(200, 400);
                 imagen.setAbsolutePosition(30f, 750f);
                 //imagen.setAlignment(Element.ALIGN_LEFT);
-                 doc.add(imagen);
+                // doc.add(imagen);
                  
                 Paragraph Encabezado = new Paragraph();
                 Paragraph Titulo = new Paragraph();
@@ -169,8 +176,8 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
                 numero.setAlignment(Element.ALIGN_RIGHT);
                 Titulo.add("CLIENTE: " + nomProyecto + "\n");
                 Titulo.setAlignment(Element.ALIGN_RIGHT);
-                Encabezado.add("TELEFONO: XXXXXXXX\n");
-                Encabezado.add("DIRECCION: XXXXXXXX\n");
+                Encabezado.add("TELEFONO: 0992722052 - 02273220\n");
+                Encabezado.add("DIRECCION: Calle J 144 N43 y Alonso de Torres (frente al CC. EL BOSQUE)\n");
                 Encabezado.add("PAGINA WEB: https://theforestbeef.com/ \n");
                 Encabezado.add("AUTORIZADO POR.  " + encarProyecto + "\n");
                 Encabezado.add("FECHA COTIZACIÓN   " + fechaPedido);
@@ -365,6 +372,8 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         ButtonGroup grupo = new ButtonGroup();
         grupo.add(vcotizacionDetalle.getRbEfectivo());
         grupo.add(vcotizacionDetalle.getRbTarjeta());
+        
+        
 
     }
 

@@ -24,6 +24,7 @@ public class Conexion {
             //String url = "jdbc:postgresql://192.168.0.2:5454/FACTURACION?";
             String url = "jdbc:postgresql://127.0.0.1:5454/FACTURACION?";
             String user = "postgres";
+            //String pass = "REYDECOPAS25";
             String pass = "123098";
             try {
                 Class.forName("org.postgresql.Driver").newInstance();

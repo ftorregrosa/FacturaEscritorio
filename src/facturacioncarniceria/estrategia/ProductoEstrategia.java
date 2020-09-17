@@ -81,7 +81,7 @@ public class ProductoEstrategia implements InterfaceStrategy
 
     @Override
     public void llenarComboBox(JComboBox combo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        productodao.llenarCombo(combo);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ProductoEstrategia implements InterfaceStrategy
 
     @Override
     public void visualizeAnular(DefaultTableModel tableProvider, String codigoFacturaAnulada) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        productodao.visualizeFiltro(tableProvider, codigoFacturaAnulada);
     }
 
     @Override

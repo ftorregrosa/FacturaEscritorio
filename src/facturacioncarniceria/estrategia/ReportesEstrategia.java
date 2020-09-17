@@ -25,7 +25,7 @@ public class ReportesEstrategia implements InterfaceStrategy
 
     @Override
     public void visualize(DefaultTableModel modelo, int tipo) {
-        
+        reportedao.visualizeCompraProveedor(modelo);
         
     }
 
@@ -111,6 +111,10 @@ public class ReportesEstrategia implements InterfaceStrategy
         if(num==2)
         {
             reportedao.visualizeVenta(tableProvider, fechaIncio, fechaFin);
+        }
+        if(num==3)
+        {
+            reportedao.visualizeCompraAnuladas(tableProvider, fechaIncio, fechaFin);
         }
     }
 
