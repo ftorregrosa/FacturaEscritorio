@@ -88,7 +88,7 @@ public void visualizeVenta(DefaultTableModel tableProvider, String fechaIncio, S
         }
     }
     
-public void visualizeCompraAnuladas(DefaultTableModel tableProvider, String fechaIncio, String fechaFin) {
+public void visualizeCompraAnulada(DefaultTableModel tableProvider, String fechaIncio, String fechaFin) {
         String data[] = new String[12];
         Connection connect = null;
         try {

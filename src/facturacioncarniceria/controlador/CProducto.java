@@ -107,6 +107,8 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
         modeloTablaProducto.addColumn("Stock");
         modeloTablaProducto.addColumn("IVA");
         modeloTablaProducto.addColumn("TIPO");
+        modeloTablaProducto.addColumn("PUBLICO");
+        modeloTablaProducto.addColumn("TARJETA");
         vproducto.getTablaProductosTodos().setModel(modeloTablaProducto);
     }
 
@@ -125,6 +127,8 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
         vproducto.getTablaProductosTodos().getColumnModel().getColumn(4).setPreferredWidth(80);
         vproducto.getTablaProductosTodos().getColumnModel().getColumn(5).setPreferredWidth(50);
         vproducto.getTablaProductosTodos().getColumnModel().getColumn(6).setPreferredWidth(80);
+        vproducto.getTablaProductosTodos().getColumnModel().getColumn(7).setPreferredWidth(70);
+        vproducto.getTablaProductosTodos().getColumnModel().getColumn(8).setPreferredWidth(70);
 
         contextProducto.RunVisualizar(modeloTablaProducto, 1);
 
@@ -146,7 +150,7 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
         ButtonGroup grupo = new ButtonGroup();
         grupo.add(vproducto.getRbtnIvaSi());
         grupo.add(vproducto.getRbtnIvaNo());
-
+        ivaCinco();
     }
 
     public void cleanTable() {
@@ -318,6 +322,46 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
         }
     }
 
+    public void ivaCinco() {
+
+        for (int j = 0; j < vproducto.getTablaProductosTodos().getRowCount(); j++) {
+            if (vproducto.getTablaProductosTodos().getValueAt(j, 5).toString().equals("SI")) {
+                double totalProductos1 = 0;
+                totalProductos1 = ((Float.parseFloat(vproducto.getTablaProductosTodos().getValueAt(j, 3).toString()) * 0.12) + Float.parseFloat(vproducto.getTablaProductosTodos().getValueAt(j, 3).toString()));
+                totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+
+                modeloTablaProducto.setValueAt(Double.toString(totalProductos1), j, 7);
+                modeloTablaProducto.fireTableRowsUpdated(j, 7);
+
+                double totalProducto = ((totalProductos1 * 0.05) + totalProductos1);
+                totalProducto = Math.round(totalProducto * 100) / 100d;
+
+                modeloTablaProducto.setValueAt(Double.toString(totalProducto), j, 8);
+                modeloTablaProducto.fireTableRowsUpdated(j, 8);
+                totalProductos1 = 0;
+            }else{
+                double totalProductos1 = 0;
+                totalProductos1 = ((Float.parseFloat(vproducto.getTablaProductosTodos().getValueAt(j, 3).toString()) * 1));
+                totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+
+                modeloTablaProducto.setValueAt(Double.toString(totalProductos1), j, 7);
+                modeloTablaProducto.fireTableRowsUpdated(j, 7);
+
+                double totalProducto = ((totalProductos1 * 0.05) + totalProductos1);
+                totalProducto = Math.round(totalProducto * 100) / 100d;
+
+                modeloTablaProducto.setValueAt(Double.toString(totalProducto), j, 8);
+                modeloTablaProducto.fireTableRowsUpdated(j, 8);
+                totalProductos1 = 0;
+                
+                
+            }
+            
+            
+        }
+
+    }
+
     public void sumarPrecioProductos() {
         double totalProductos1 = 0;
         for (int j = 0; j < vproducto.getTablaProductosTodos().getRowCount(); j++) {
@@ -420,7 +464,9 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
                     limpiarCampos();
                     cleanTable();
                     contextProducto.RunVisualizar(modeloTablaProducto, 1);
+                    ivaCinco();
                     ultimoTabla();
+                    
                 }
 
             } catch (Exception ex) {
@@ -430,17 +476,21 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
         } else if (vproducto.getBtnActualizar() == ae.getSource()) {
 
             cleanTable();
+            
             contextProducto.RunVisualizar(modeloTablaProducto, 1);
+            ivaCinco();
 
         } else if (vproducto.getBtnFiltrarBuscar() == ae.getSource()) {
 
             cleanTable();
+            ivaCinco();
             try {
                 contextProducto.RunVisualizarAnular(modeloTablaProducto, vproducto.getCbTipos().getSelectedItem().toString());
                 sumarPrecioProductos();
             } catch (NullPointerException e) {
 
             }
+            
 
         } else if (vproducto.getBtnModificar() == ae.getSource()) {
             Producto producto = new Producto();
@@ -458,6 +508,7 @@ public class CProducto implements KeyListener, MouseListener, ActionListener {
             limpiarCampos();
             cleanTable();
             contextProducto.RunVisualizar(modeloTablaProducto, 1);
+            ivaCinco();
             ultimoTabla();
             vproducto.getBtnGuardar().setEnabled(true);
             vproducto.getBtnModificar().setEnabled(false);

@@ -68,11 +68,9 @@ public class CCliente implements KeyListener, MouseListener, ActionListener {
     public void validarCampos()
     {
         validar.validarLetras(vcliente.getTxtNombreCliente());
-        validar.validarNumeros(vcliente.getTxtCedulaCliente());
         validar.validarNumeros(vcliente.getTxtTelefonoCliente());
         validar.validarLetras(vcliente.getTxtBuscarClientes());
         
-        validar.limitarCaracteres(vcliente.getTxtCedulaCliente(), 13);
         validar.limitarCaracteres(vcliente.getTxtTelefonoCliente(), 10);
     }
     
@@ -88,6 +86,7 @@ public class CCliente implements KeyListener, MouseListener, ActionListener {
         contextCliente.RunVisualizar(modeloTablaCliente, 1);
         vcliente.getTxtApellidoCliente().setDocument(new Validaciones());
         vcliente.getTxtNombreCliente().setDocument(new Validaciones());
+        //vcliente.getTxtNombreCliente().setDocument(new Validaciones());
         vcliente.getTxtDireccionCliente().setDocument(new Validaciones());
         vcliente.getTxtBuscarClientes().setDocument(new Validaciones());
 

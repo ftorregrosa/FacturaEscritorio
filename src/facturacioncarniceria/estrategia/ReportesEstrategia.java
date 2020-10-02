@@ -106,15 +106,15 @@ public class ReportesEstrategia implements InterfaceStrategy
     public void visualizeCompraVenta(DefaultTableModel tableProvider, String fechaIncio, String fechaFin, int num) {
         if(num==1)
         {
-            reportedao.visualizeCompra(tableProvider, fechaIncio, fechaFin);
+           reportedao.visualizeCompra(tableProvider, fechaIncio, fechaFin);
         }
         if(num==2)
         {
-            reportedao.visualizeVenta(tableProvider, fechaIncio, fechaFin);
+          reportedao.visualizeVenta(tableProvider, fechaIncio, fechaFin);
         }
         if(num==3)
-        {
-            reportedao.visualizeCompraAnuladas(tableProvider, fechaIncio, fechaFin);
+        {            
+           reportedao.visualizeCompraAnulada(tableProvider, fechaIncio, fechaFin);
         }
     }
 

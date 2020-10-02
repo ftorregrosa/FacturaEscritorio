@@ -56,9 +56,11 @@ public class FacturaDAO {
         try {
             connect = connectionBD.getConexion();
             Statement st = connect.createStatement();
-            ResultSet sentencia2 = st.executeQuery("Select DISTINCT A.numerofactura, A.cedulacliente, B.nombrecliente|| ' ' || B.apellidocliene, C.fechafactura, D.nombreusuario || ' ' || D.apellidousuario\n" +
+            ResultSet sentencia2 = st.executeQuery("Select DISTINCT A.numerofactura, A.cedulacliente, B.nombrecliente|| ' ' || B.apellidocliene,\n" +
+"C.fechafactura, D.nombreusuario || ' ' || D.apellidousuario\n" +
 "From detallefactura A, cliente B, factura C, usuario D\n" +
-"Where A.numerofactura = C.numerofactura AND A.cedulacliente = B.cedulacliente AND A.cedulausuario = D.cedulausuario AND C.anuladafactura = 'NO'");
+"Where A.numerofactura = C.numerofactura AND A.cedulacliente = B.cedulacliente \n" +
+"AND A.cedulausuario = D.cedulausuario AND C.anuladafactura = 'NO' order by A.numerofactura");
             while (sentencia2.next()) {
                 data[0] = sentencia2.getString(1);
                 data[1] = sentencia2.getString(2);

@@ -340,6 +340,17 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         return totalProductos1;
     }
     
+    public double subTotalIva() {
+        double totalProductos1 = 0;
+        for (int j = 0; j < vfacturaDetalle.getTablaFactura().getRowCount(); j++) {
+            if (vfacturaDetalle.getTablaFactura().getValueAt(j, 5).toString().equals("SI")) {
+                totalProductos1 = totalProductos1 + Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 4).toString());
+                totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+            }
+        }
+        return totalProductos1;
+    }
+    
     public double subTotalCeroCompraVenta() {
         double totalProductos1 = 0;
         for (int j = 0; j < vfacturaDetalle.getTablaFactura().getRowCount()-4; j++) {
@@ -377,18 +388,17 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         String metodo = Integer.toString(metodoPago);
 
         if (metodoPago == 1) {
-            double ivaTarjeta = ((0.10 * superTotal));
-            double superTotalTarjeta = (superTotal + ivaTarjeta);
-
-            superTotalTarjeta = Math.round(superTotalTarjeta * 100) / 100d;
-            contextFacturaDetalle.RunAnadirCompraVenta(metodo, vprincipal.getLblCedula().getText(), vfacturaDetalle.getTxtFechaFactura().getText(), vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNombreCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), subIvaTotal, subtotalcero, ivaTotal, superTotalTarjeta);
+//                double ivaTarjeta = ((1 * superTotal));
+//                double superTotalTarjeta = (superTotal + ivaTarjeta);
+//
+//                superTotalTarjeta = Math.round(superTotalTarjeta * 100) / 100d;
+            contextFacturaDetalle.RunAnadirCompraVenta(metodo, vprincipal.getLblCedula().getText(), vfacturaDetalle.getTxtFechaFactura().getText(), vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNombreCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), subIvaTotal, subtotalcero, ivaTotal, superTotal);
 
         }
         if (metodoPago == 2) {
             contextFacturaDetalle.RunAnadirCompraVenta(metodo, vprincipal.getLblCedula().getText(), vfacturaDetalle.getTxtFechaFactura().getText(), vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNombreCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), subIvaTotal, subtotalcero, ivaTotal, superTotal);
 
         }
-        
         
     }
 
@@ -404,7 +414,56 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         return 0;
     }
     
+    public void ivaPrecioProductosTabla() {   
+        for (int j = 0; j < vfacturaDetalle.getTablaFactura().getRowCount(); j++) {
+            double totalProductos1 = 0;
+            totalProductos1 = ((Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 3).toString())*0.05)+Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 3).toString()));
+            totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+          //  vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(totalProductos1));
+            modeloTablaFactura.setValueAt(Double.toString(totalProductos1), j, 3);
+            modeloTablaFactura.fireTableRowsUpdated(j, 3);
+            
+            double totalProducto = totalProductos1 * Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 2).toString());
+                        totalProducto = Math.round(totalProducto * 100) / 100d;
+                       // String to = Double.toString(totalProducto);
+                        
+                        
+            modeloTablaFactura.setValueAt(Double.toString(totalProducto), j, 4);
+            modeloTablaFactura.fireTableRowsUpdated(j, 4);           
+            
+            
+            
+            totalProductos1 = 0;
+        }                    
+    } 
+    
+    
+     public void ivaPrecioProductosInversa() {   
+        for (int j = 0; j < vfacturaDetalle.getTablaFactura().getRowCount(); j++) {
+            double totalProductos1 = 0;
+            totalProductos1 = ((Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 3).toString())/1.05));
+            totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+          //  vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(totalProductos1));
+            modeloTablaFactura.setValueAt(Double.toString(totalProductos1), j, 3);
+            modeloTablaFactura.fireTableRowsUpdated(j, 3);
+            
+            double totalProducto = totalProductos1 * Float.parseFloat(vfacturaDetalle.getTablaFactura().getValueAt(j, 2).toString());
+                        totalProducto = Math.round(totalProducto * 100) / 100d;
+                       // String to = Double.toString(totalProducto);
+                        
+                        
+            modeloTablaFactura.setValueAt(Double.toString(totalProducto), j, 4);
+            modeloTablaFactura.fireTableRowsUpdated(j, 4);           
+            
+            
+            
+            totalProductos1 = 0;
+        }                    
+    } 
+    
     public void calcularTotal(){
+        
+        vfacturaDetalle.getTablaFactura().setEnabled(false);
         
         if(vfacturaDetalle.getRbTarjeta().isSelected() == false && vfacturaDetalle.getRbEfectivo().isSelected() == false){
            
@@ -412,27 +471,28 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 
             JOptionPane.showMessageDialog(vprincipal, "Seleccione un metodo de Pago");
         }else if (vfacturaDetalle.getRbEfectivo().isSelected() == true) {
-     
+            
+         
             double subtotalcero = subTotalCero();           
-            double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
-            double subIvaTotal=subTotal-subtotalcero;
+           // double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
+            double subIvaTotal=subTotalIva();
             
             double subIvaTotaldosDecimales;
             subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
-            objectoSubtotal[1] = " "; 
+            objectoSubtotal[1] = "                                     SUB 12%"; 
             objectoSubtotal[2] = " ";
-            objectoSubtotal[3] = "SUB 12%";
+            objectoSubtotal[3] = " ";
             objectoSubtotal[4] = subIvaTotaldosDecimales;
             modeloTablaFactura.addRow(objectoSubtotal);
             
             Object[] objectoIvaCero = new Object[6];
             objectoIvaCero[0] = " ";
-            objectoIvaCero[1] = " ";
+            objectoIvaCero[1] = "                                     SUB 0%";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "SUB 0%";
+            objectoIvaCero[3] = " ";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
             
@@ -440,9 +500,9 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             ivaTotal = Math.round(ivaTotal * 100) / 100d;
             Object[] objectoIva = new Object[6];
             objectoIva[0] = " ";
-            objectoIva[1] = " ";
+            objectoIva[1] = "                                     IVA 12%";
             objectoIva[2] = " ";
-            objectoIva[3] = "IVA 12%";
+            objectoIva[3] = " ";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
              
@@ -450,9 +510,9 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             superTotal = Math.round(superTotal * 100) / 100d;
             Object[] objectoTotal = new Object[6];
             objectoTotal[0] = " ";
-            objectoTotal[1] = " ";
+            objectoTotal[1] = "                                     TOTAL";
             objectoTotal[2] = " ";
-            objectoTotal[3] = "TOTAL";
+            objectoTotal[3] = " ";
             objectoTotal[4] = superTotal;
             modeloTablaFactura.addRow(objectoTotal);
             
@@ -462,30 +522,32 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             vfacturaDetalle.getBtnImprimir().setEnabled(true);
             vfacturaDetalle.getTablaProductosFactura().setEnabled(false);
        vfacturaDetalle.getBtnEditarTabla().setEnabled(true);
+       vfacturaDetalle.getRbTarjeta().setEnabled(false);
             
         }else if (vfacturaDetalle.getRbTarjeta().isSelected() == true) {
             
+            ivaPrecioProductosTabla();
             double subtotalcero = subTotalCero();           
-            double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
-            double subIvaTotal=subTotal-subtotalcero;
+           // double subTotal = Double.parseDouble(vfacturaDetalle.getTxtTotalFactura().getText());
+            double subIvaTotal=subTotalIva();
             
             double subIvaTotaldosDecimales;
             subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
             
             Object[] objectoSubtotal = new Object[6];
             objectoSubtotal[0] = " ";
-            objectoSubtotal[1] = " "; 
+            objectoSubtotal[1] = "                                     SUB 12%"; 
             objectoSubtotal[2] = " ";
-            objectoSubtotal[3] = "SUB 12%";
+            objectoSubtotal[3] = " ";
             objectoSubtotal[4] = subIvaTotaldosDecimales;
             modeloTablaFactura.addRow(objectoSubtotal);
             
             
             Object[] objectoIvaCero = new Object[6];
             objectoIvaCero[0] = " ";
-            objectoIvaCero[1] = " ";
+            objectoIvaCero[1] = "                                     SUB 0%";
             objectoIvaCero[2] = " ";
-            objectoIvaCero[3] = "SUB 0%";
+            objectoIvaCero[3] = " ";
             objectoIvaCero[4] = subtotalcero;
             modeloTablaFactura.addRow(objectoIvaCero);
             
@@ -493,32 +555,30 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             ivaTotal = Math.round(ivaTotal * 100) / 100d;
             Object[] objectoIva = new Object[6];
             objectoIva[0] = " ";
-            objectoIva[1] = " ";
+            objectoIva[1] = "                                     IVA 12%";
             objectoIva[2] = " ";
-            objectoIva[3] = "IVA 12%";
+            objectoIva[3] = " ";
             objectoIva[4] = ivaTotal;
             modeloTablaFactura.addRow(objectoIva);
-             
+
+              
             double superTotal = (ivaTotal + subtotalcero+subIvaTotal);
-                       
-            double ivaTarjeta = ((0.10 * superTotal)); 
-            double superTotalTarjeta = (superTotal + ivaTarjeta);
-            superTotalTarjeta = Math.round(superTotalTarjeta * 100) / 100d;
-            
+            superTotal = Math.round(superTotal * 100) / 100d;
             Object[] objectoTotal = new Object[6];
             objectoTotal[0] = " ";
-            objectoTotal[1] = " ";
+            objectoTotal[1] = "                                     TOTAL";
             objectoTotal[2] = " ";
-            objectoTotal[3] = "TOTAL";
-            objectoTotal[4] = superTotalTarjeta;
+            objectoTotal[3] = " ";
+            objectoTotal[4] = superTotal;
             modeloTablaFactura.addRow(objectoTotal);
             
             
-            vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(superTotalTarjeta));
+            vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(superTotal));
             vfacturaDetalle.getBtnCalcularFactura().setEnabled(false);
             vfacturaDetalle.getBtnImprimir().setEnabled(true);
             vfacturaDetalle.getTablaProductosFactura().setEnabled(false);
-       vfacturaDetalle.getBtnEditarTabla().setEnabled(true);
+            vfacturaDetalle.getBtnEditarTabla().setEnabled(true);
+            vfacturaDetalle.getRbEfectivo().setEnabled(false);
         
         }
        
@@ -537,7 +597,8 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
     }
 
     public void quitarUltimasFilas() {
-
+        vfacturaDetalle.getTablaFactura().setEnabled(true);
+        if (vfacturaDetalle.getRbEfectivo().isSelected() == true) {
             modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);
             modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);
             modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);       
@@ -545,8 +606,22 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
             vfacturaDetalle.getTablaProductosFactura().setEnabled(true);
             vfacturaDetalle.getBtnEditarTabla().setEnabled(false);
             vfacturaDetalle.getBtnCalcularFactura().setEnabled(true);
-            
+            vfacturaDetalle.getRbTarjeta().setEnabled(true);
+           // ivaPrecioProductosInversa();
             sumarPrecioProductos();
+        }
+        if (vfacturaDetalle.getRbTarjeta().isSelected() == true) {
+            modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1);       
+            modeloTablaFactura.removeRow(vfacturaDetalle.getTablaFactura().getRowCount() - 1); 
+            vfacturaDetalle.getTablaProductosFactura().setEnabled(true);
+            vfacturaDetalle.getBtnEditarTabla().setEnabled(false);
+            vfacturaDetalle.getBtnCalcularFactura().setEnabled(true);
+            vfacturaDetalle.getRbEfectivo().setEnabled(true);
+            ivaPrecioProductosInversa();
+            sumarPrecioProductos();
+        }
         
     }
     
@@ -578,6 +653,16 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
     @Override
     public void keyPressed(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+     public int tarjetasProductos(String codigo) {
+        for (int j = 0; j < vfacturaDetalle.getTablaFactura().getRowCount(); j++) {
+            String codigoEnRenglon = (String) vfacturaDetalle.getTablaFactura().getValueAt(j, 0);
+            if (codigo.equals(codigoEnRenglon)) {
+                return j;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -697,18 +782,19 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
         String codigoPedido = vfacturaDetalle.getTxtNumeroFactura().getText();
         String nomProyecto = vfacturaDetalle.getTxtNombreCliente().getText();
         String direccion = vfacturaDetalle.getTxtDireccionCliente().getText();
-        String telefono = vfacturaDetalle.getTxtTelefonoCliente().getText();
-        String encarProyecto = vprincipal.getLblNombreUsuario().getText();
+        String telefono = vfacturaDetalle.getTxtCedulaCliente().getText();
         String fechaPedido = vfacturaDetalle.getTxtFechaFactura().getText();
         crearCarpetas1(fechaPedido);
         JFileChooser dlg = new JFileChooser("A:/FACTURACION FOREST BEEF/"+fechaPedido);
         dlg.setSelectedFile(new File("FAC_" + fechaPedido + "_" + codigoPedido));
         
-        Font fuente1 = new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD);
-        Font fuente2 = new Font(Font.FontFamily.TIMES_ROMAN, 7, Font.BOLD);
-        Font fuente3 = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD);
+        Font fuente1 = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
+        Font fuente2 = new Font(Font.FontFamily.HELVETICA, 7, Font.NORMAL);
+        Font fuente3 = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
 
+        
         int opcion = dlg.showSaveDialog(vprincipal);
+        //System.out.println(opcion);
         if (opcion == JFileChooser.APPROVE_OPTION) {
 
             File f = dlg.getSelectedFile();
@@ -718,9 +804,9 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 
             try {
                 FileOutputStream archivo = new FileOutputStream(f + ".pdf");
-                Rectangle pageSize = new Rectangle(270f, 565f); //ancho y alto
+                Rectangle pageSize = new Rectangle(270f, 568f); //ancho y alto
                 Document doc = new Document(pageSize);
-                 doc.setMargins(22, 7, 10, 15); // (izq, der, arriba, abajo)
+                 doc.setMargins(22, 7, 10, 0); // (izq, der, arriba, abajo)
                 //Document doc = new Document();
                 PdfWriter writer =PdfWriter.getInstance(doc, archivo);
                 doc.open();
@@ -742,49 +828,47 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 //                }
 
                 //numero.setAlignment(Element.ALIGN_RIGHT);
-                Encabezado.add("NOMBRE: " + nomProyecto + "\n");
-                Encabezado.add("DIRECCION: " + direccion + "\n");
-                Encabezado.add("TELEFONO: " + telefono + "\n");
+                Encabezado.add("             " + nomProyecto + "\r");
+                Encabezado.add("               " + telefono + "                                  "+fechaPedido+ "\r");
+                Encabezado.add("                 " + direccion + "\n");
                 Encabezado.setAlignment(Element.ALIGN_RIGHT);
               //  Encabezado.add("CAJERO.  " + encarProyecto + "\n");
-                Encabezado.add("FECHA:   " + fechaPedido);
                 Encabezado.setAlignment(Element.ALIGN_LEFT);
-                FinalPag.add("CAJERO:  " + encarProyecto + "\n");
                 FinalPag.setAlignment(Element.ALIGN_BASELINE);
                 doc.add(Encabezado);
                 doc.add(FinalPag);
-                doc.add(new Paragraph("___________________________________", fuente1));
+                doc.add(new Paragraph("\n \n", fuente1));
 
                 
 
-                PdfPTable tablaPedido = new PdfPTable(4);
+                PdfPTable tablaPedido = new PdfPTable(3);
                // tablaPedido.getDefaultCell().setBorder(0);
                // tablaPedido.getDefaultCell().setBorderWidth(0f);
                 tablaPedido.getDefaultCell().setBorderColor(BaseColor.YELLOW);
                // tablaPedido.DefaultCell.Border = 0;
                 tablaPedido.setHorizontalAlignment(Element.ALIGN_LEFT);
-                tablaPedido.setWidthPercentage(75f);
-                tablaPedido.setWidths(new float[]{0.35f, 0.10f, 0.15f, 0.15f});
+                tablaPedido.setWidthPercentage(80f);
+                tablaPedido.setWidths(new float[]{0.10f, 0.50f, 0.20f});
                 //tablaPedido.getDefaultCell().setBorder(0);
                // tablaPedido.getDefaultCell().setBorderWidth(0f);
                 tablaPedido.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                
                 
-                PdfPCell cellOn = (new PdfPCell(new Phrase("Descripcion", fuente1)));
-                PdfPCell cellO = (new PdfPCell(new Phrase("Cant", fuente1)));
-                PdfPCell cell = (new PdfPCell(new Phrase("Precio", fuente1)));
-                PdfPCell cel = (new PdfPCell(new Phrase("Total", fuente1)));
+//                PdfPCell cellOn = (new PdfPCell(new Phrase(" ", fuente1)));
+//                PdfPCell cellO = (new PdfPCell(new Phrase("Cant", fuente1)));
+//                PdfPCell cell = (new PdfPCell(new Phrase("Precio", fuente1)));
+//                PdfPCell cel = (new PdfPCell(new Phrase("Total", fuente1)));
          
-                cellOn.setBorder(0);
-                cellO.setBorder(0);
-                cell.setBorder(0);
-                cel.setBorder(0);
-                
-    
-                tablaPedido.addCell(cellOn);
-                tablaPedido.addCell(cellO);
-                tablaPedido.addCell(cell);
-                tablaPedido.addCell(cel);
+//                cellOn.setBorder(0);
+//                cellO.setBorder(0);
+//                cell.setBorder(0);
+//                cel.setBorder(0);
+//                
+//    
+//                tablaPedido.addCell(cellOn);
+//                tablaPedido.addCell(cellO);
+//                tablaPedido.addCell(cell);
+//                tablaPedido.addCell(cel);
                 
                 
 //                tablaPedido.addCell(new PdfPCell(new Phrase("Codigo", fuente1)));
@@ -794,28 +878,28 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
 //                tablaPedido.addCell(new PdfPCell(new Phrase("Total", fuente1)));
 
                 for (int i = 0; i < vfacturaDetalle.getTablaFactura().getRowCount(); i++) {
-                    String nomProducto = vfacturaDetalle.getTablaFactura().getValueAt(i, 1).toString();
-                    String cantidad = vfacturaDetalle.getTablaFactura().getValueAt(i, 2).toString();
-                    String precio = vfacturaDetalle.getTablaFactura().getValueAt(i, 3).toString();
+                    String nomProducto = vfacturaDetalle.getTablaFactura().getValueAt(i, 2).toString();
+                    String cantidad = vfacturaDetalle.getTablaFactura().getValueAt(i, 1).toString();
+                   // String precio = vfacturaDetalle.getTablaFactura().getValueAt(i, 3).toString();
                     String total = vfacturaDetalle.getTablaFactura().getValueAt(i, 4).toString();
 
 
                     PdfPCell celdasProducto=(new PdfPCell(new Phrase(nomProducto, fuente2)));
                     PdfPCell celdasProduct=(new PdfPCell(new Phrase(cantidad, fuente2)));
-                    PdfPCell celdasProduc=(new PdfPCell(new Phrase(precio, fuente2)));
+                   // PdfPCell celdasProduc=(new PdfPCell(new Phrase(precio, fuente2)));
                     PdfPCell celdasProdu=(new PdfPCell(new Phrase(total, fuente3)));
                     
 
                 celdasProducto.setBorder(0);
                 celdasProduct.setBorder(0);
-                celdasProduc.setBorder(0);
+               // celdasProduc.setBorder(0);
                 celdasProdu.setBorder(0);
                     
                     
     
                 tablaPedido.addCell(celdasProducto);
                 tablaPedido.addCell(celdasProduct);
-                tablaPedido.addCell(celdasProduc);
+               // tablaPedido.addCell(celdasProduc);
                 tablaPedido.addCell(celdasProdu);
                     
                 }
@@ -847,35 +931,32 @@ public class CFacturaDetalle implements KeyListener, MouseListener, ActionListen
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (this.vfacturaDetalle.getBtnImprimir() == ae.getSource()) {            
-            
-            int resultadoMetodoPago=metodoPago();
-            restarStock();
-            contextFacturaDetalle.RunAnadirFacturaDetalle(modeloTablaFactura, vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), vprincipal.getLblCedula().getText(),resultadoMetodoPago);
-            guardarCompraVenta();
-            try{
-            double superTotal = 0;
-            String entrega = JOptionPane.showInputDialog(vprincipal, "Intruduzca la precio");
-            float entregaF = Float.parseFloat(entrega);
-            superTotal = (entregaF-(Float.parseFloat(vfacturaDetalle.getTxtTotalFactura().getText())));
-            
-            
+        if (this.vfacturaDetalle.getBtnImprimir() == ae.getSource()) {
 
-            superTotal = Math.round(superTotal * 100) / 100d;
-            
-            
-            
-            
-            JOptionPane.showMessageDialog(vprincipal, "VUELTO: "+ superTotal);
-            
-            }catch(HeadlessException | NumberFormatException e)
-            {
-                JOptionPane.showMessageDialog(vprincipal, "No a ingresado bn el valor recibido");
+            int resultadoMetodoPago = metodoPago();
+            if (resultadoMetodoPago == 2) {
+                try {
+                    double superTotal = 0;
+                    String entrega = JOptionPane.showInputDialog(vprincipal, "Introduzca el precio");
+                    float entregaF = Float.parseFloat(entrega);
+                    superTotal = (entregaF - (Float.parseFloat(vfacturaDetalle.getTxtTotalFactura().getText())));
+
+                    superTotal = Math.round(superTotal * 100) / 100d;
+
+                    JOptionPane.showMessageDialog(vprincipal, "VUELTO: " + superTotal);
+
+                } catch (HeadlessException | NumberFormatException e) {
+                    JOptionPane.showMessageDialog(vprincipal, "No a ingresado bn el valor recibido");
+                }
             }
+            restarStock();
+            contextFacturaDetalle.RunAnadirFacturaDetalle(modeloTablaFactura, vfacturaDetalle.getTxtCedulaCliente().getText(), vfacturaDetalle.getTxtNumeroFactura().getText(), vprincipal.getLblCedula().getText(), resultadoMetodoPago);
+
+            guardarCompraVenta();
             crearPDF();
             vfacturaDetalle.dispose();
         }
-        
+
         if (this.vfacturaDetalle.getBtnCalcularFactura() == ae.getSource()) {  
             
             calcularTotal();

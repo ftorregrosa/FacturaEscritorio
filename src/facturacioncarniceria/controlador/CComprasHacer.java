@@ -376,7 +376,7 @@ public class CComprasHacer implements ActionListener,KeyListener, MouseListener 
 
             double superTotal = (ivaTotal + subtotalcero + subIvaTotal);
 
-            double ivaTarjeta = ((0.10 * superTotal));
+            double ivaTarjeta = ((0.08 * superTotal));
             double superTotalTarjeta = (superTotal + ivaTarjeta);
             
             superTotalTarjeta = Math.round(superTotalTarjeta * 100) / 100d;

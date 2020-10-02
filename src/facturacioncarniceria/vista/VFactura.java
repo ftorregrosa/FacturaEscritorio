@@ -168,14 +168,6 @@ public class VFactura extends javax.swing.JInternalFrame {
         this.txtFechaFactura = txtFechaFactura;
     }
 
-    public JTextField getTxtGuardarRuta() {
-        return txtGuardarRuta;
-    }
-
-    public void setTxtGuardarRuta(JTextField txtGuardarRuta) {
-        this.txtGuardarRuta = txtGuardarRuta;
-    }
-
     public JTextField getTxtNombreCliente() {
         return txtNombreCliente;
     }
@@ -217,7 +209,6 @@ public class VFactura extends javax.swing.JInternalFrame {
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaFactura = new javax.swing.JTable();
-        txtGuardarRuta = new javax.swing.JTextField();
         btnAnular = new rojeru_san.RSButtonRiple();
         btnImprimir = new rojeru_san.RSButtonRiple();
         txtTotalFactura = new javax.swing.JTextField();
@@ -254,7 +245,6 @@ public class VFactura extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         txtNumeroFactura = new javax.swing.JTextField();
 
-        setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("FACTURA");
@@ -276,8 +266,6 @@ public class VFactura extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaFactura);
-
-        txtGuardarRuta.setText("jTextField1");
 
         btnAnular.setBackground(new java.awt.Color(255, 0, 51));
         btnAnular.setText("ANULAR");
@@ -314,12 +302,10 @@ public class VFactura extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                        .addComponent(txtGuardarRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -345,8 +331,7 @@ public class VFactura extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtGuardarRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -771,7 +756,6 @@ public class VFactura extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCorreoCliente;
     private javax.swing.JTextField txtDireccionCliente;
     private javax.swing.JTextField txtFechaFactura;
-    private javax.swing.JTextField txtGuardarRuta;
     private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNumeroArticulos;
     private javax.swing.JTextField txtNumeroFactura;

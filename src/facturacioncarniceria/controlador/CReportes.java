@@ -499,7 +499,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
         }
         if (this.vreportes.getBtnActualizar() == ae.getSource()) {
             cleanTableCompra();
-            cleanTableVenta1();
+            cleanTableVenta();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -528,7 +528,7 @@ public class CReportes implements KeyListener, MouseListener, ActionListener {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String fechaIngreso = sdf.format(vreportes.getDcInicial1().getDate());
             String fechaIngresoFin = sdf.format(vreportes.getDcFinal1().getDate());
-            contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin, 2);
+            contextReportes.RunvisualizeCompraVenta(modeloTablaVentas1, fechaIngreso, fechaIngresoFin, 3);
             cajaNum();
         }
 

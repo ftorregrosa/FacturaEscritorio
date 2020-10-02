@@ -515,6 +515,17 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         }
         return totalProductos1;
     }
+    
+    public double subTotalIva() {
+        double totalProductos1 = 0;
+        for (int j = 0; j < vcotizacionDetalle.getTablaCotizacion().getRowCount(); j++) {
+            if (vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 5).toString().equals("SI")) {
+                totalProductos1 = totalProductos1 + Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 4).toString());
+                totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+            }
+        }
+        return totalProductos1;
+    }
 
     public double sumarPrecioProductosTabla() {
         double totalProductos1 = 0;
@@ -526,6 +537,52 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         }
         return 0;
     }
+    
+    public void ivaPrecioProductosTabla() {   
+        for (int j = 0; j < vcotizacionDetalle.getTablaCotizacion().getRowCount(); j++) {
+            double totalProductos1 = 0;
+            totalProductos1 = ((Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 3).toString())*0.05)+Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 3).toString()));
+            totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+          //  vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(totalProductos1));
+            modeloTablaFactura.setValueAt(Double.toString(totalProductos1), j, 3);
+            modeloTablaFactura.fireTableRowsUpdated(j, 3);
+            
+            double totalProducto = totalProductos1 * Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 2).toString());
+                        totalProducto = Math.round(totalProducto * 100) / 100d;
+                       // String to = Double.toString(totalProducto);
+                        
+                        
+            modeloTablaFactura.setValueAt(Double.toString(totalProducto), j, 4);
+            modeloTablaFactura.fireTableRowsUpdated(j, 4);           
+            
+            
+            
+            totalProductos1 = 0;
+        }                    
+    } 
+    
+     public void ivaPrecioProductosInversa() {   
+        for (int j = 0; j < vcotizacionDetalle.getTablaCotizacion().getRowCount(); j++) {
+            double totalProductos1 = 0;
+            totalProductos1 = ((Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 3).toString())/1.05));
+            totalProductos1 = Math.round(totalProductos1 * 100) / 100d;
+          //  vfacturaDetalle.getTxtTotalFactura().setText(Double.toString(totalProductos1));
+            modeloTablaFactura.setValueAt(Double.toString(totalProductos1), j, 3);
+            modeloTablaFactura.fireTableRowsUpdated(j, 3);
+            
+            double totalProducto = totalProductos1 * Float.parseFloat(vcotizacionDetalle.getTablaCotizacion().getValueAt(j, 2).toString());
+                        totalProducto = Math.round(totalProducto * 100) / 100d;
+                       // String to = Double.toString(totalProducto);
+                        
+                        
+            modeloTablaFactura.setValueAt(Double.toString(totalProducto), j, 4);
+            modeloTablaFactura.fireTableRowsUpdated(j, 4);           
+            
+            
+            
+            totalProductos1 = 0;
+        }                    
+    } 
 
     public void calcularTotal() {
 
@@ -537,8 +594,8 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
         } else if (vcotizacionDetalle.getRbEfectivo().isSelected() == true) {
 
             double subtotalcero = subTotalCero();
-            double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
-            double subIvaTotal = subTotal - subtotalcero;
+            //double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
+            double subIvaTotal = subTotalIva();
             
             double subIvaTotaldosDecimales;
             subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
@@ -584,13 +641,14 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             vcotizacionDetalle.getBtnCalcularFactura().setEnabled(false);
             vcotizacionDetalle.getBtnGenerarPDFCotizacion().setEnabled(true);
             vcotizacionDetalle.getTablaProductosCotizacion().setEnabled(false);
+            vcotizacionDetalle.getRbTarjeta().setEnabled(false);
             vcotizacionDetalle.getBtnEditarTabla().setEnabled(true);
 
         } else if (vcotizacionDetalle.getRbTarjeta().isSelected() == true) {
-
+            ivaPrecioProductosTabla();
             double subtotalcero = subTotalCero();
-            double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
-            double subIvaTotal = subTotal - subtotalcero;
+           // double subTotal = Double.parseDouble(vcotizacionDetalle.getTxtTotalFactura().getText());
+            double subIvaTotal = subTotalIva();
             
             double subIvaTotaldosDecimales;
             subIvaTotaldosDecimales = Math.round(subIvaTotal * 100) / 100d;
@@ -622,23 +680,21 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
             modeloTablaFactura.addRow(objectoIva);
 
             double superTotal = (ivaTotal + subtotalcero + subIvaTotal);
-
-            double ivaTarjeta = ((0.10 * superTotal));
-            double superTotalTarjeta = (superTotal + ivaTarjeta);
-            superTotalTarjeta = Math.round(superTotalTarjeta * 100) / 100d;
+            superTotal = Math.round(superTotal * 100) / 100d;
 
             Object[] objectoTotal = new Object[6];
             objectoTotal[0] = " ";
             objectoTotal[1] = " ";
             objectoTotal[2] = " ";
             objectoTotal[3] = "TOTAL";
-            objectoTotal[4] = superTotalTarjeta;
+            objectoTotal[4] = superTotal;
             modeloTablaFactura.addRow(objectoTotal);
 
-            vcotizacionDetalle.getTxtTotalFactura().setText(Double.toString(superTotalTarjeta));
+            vcotizacionDetalle.getTxtTotalFactura().setText(Double.toString(superTotal));
             vcotizacionDetalle.getBtnCalcularFactura().setEnabled(false);
             vcotizacionDetalle.getBtnGenerarPDFCotizacion().setEnabled(true);
             vcotizacionDetalle.getTablaProductosCotizacion().setEnabled(false);
+            vcotizacionDetalle.getRbEfectivo().setEnabled(false);
             vcotizacionDetalle.getBtnEditarTabla().setEnabled(true);
 
         }
@@ -659,17 +715,31 @@ public class CCotizacionDetalle implements KeyListener, MouseListener, ActionLis
     }
 
     public void quitarUltimasFilas() {
+        vcotizacionDetalle.getTablaCotizacion().setEnabled(true);
+        if (vcotizacionDetalle.getRbEfectivo().isSelected() == true) {
 
-        modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
-        modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
-        modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
-        modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
-        vcotizacionDetalle.getTablaProductosCotizacion().setEnabled(true);
-        vcotizacionDetalle.getBtnEditarTabla().setEnabled(false);
-        vcotizacionDetalle.getBtnCalcularFactura().setEnabled(true);
-
-        sumarPrecioProductos();
-
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            vcotizacionDetalle.getTablaProductosCotizacion().setEnabled(true);
+            vcotizacionDetalle.getBtnEditarTabla().setEnabled(false);
+            vcotizacionDetalle.getBtnCalcularFactura().setEnabled(true);
+            vcotizacionDetalle.getRbTarjeta().setEnabled(true);
+            sumarPrecioProductos();
+        }
+        if (vcotizacionDetalle.getRbTarjeta().isSelected() == true) {
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            modeloTablaFactura.removeRow(vcotizacionDetalle.getTablaCotizacion().getRowCount() - 1);
+            vcotizacionDetalle.getTablaProductosCotizacion().setEnabled(true);
+            vcotizacionDetalle.getBtnEditarTabla().setEnabled(false);
+            vcotizacionDetalle.getBtnCalcularFactura().setEnabled(true);
+            vcotizacionDetalle.getRbEfectivo().setEnabled(true);
+             ivaPrecioProductosInversa();
+            sumarPrecioProductos();
+        }
     }
 
     @Override

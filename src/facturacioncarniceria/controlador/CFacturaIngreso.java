@@ -92,8 +92,7 @@ public class CFacturaIngreso implements KeyListener, MouseListener, ActionListen
     }
 
     public void validarCampos() {
-        validar.validarNumeros(vfacturaInicio.getTxtCedulaClienteIngreso());
-        validar.limitarCaracteres(vfacturaInicio.getTxtCedulaClienteIngreso(), 13);
+       
     }
 
     public void iniciarVentana() {
